@@ -13,11 +13,11 @@ public class Driver {
 
 
 
-        private TechnologyDeviceAPI techAPI;
-        private ManufacturerAPI manufacturerAPI;
+    private TechnologyDeviceAPI techAPI;
+    private ManufacturerAPI manufacturerAPI;
 
 
-        public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
             new Driver().start();
         }
 
@@ -38,8 +38,8 @@ public class Driver {
                         |  3) Reports MENU               |
                         |--------------------------------|
                         |  4) Search Manufacturers       |
-                        |  5) Search Technology Devices  |  
-                        |  6) Sort Technology Devices    | 
+                        |  5) Search Technology Devices  |
+                        |  6) Sort Technology Devices    |
                         |--------------------------------|
                         |  10) Save all                  |
                         |  11) Load all                  |
@@ -54,7 +54,14 @@ public class Driver {
             int option = mainMenu();
             while (option != 0) {
                 switch (option) {
-                    case 1->  runManufacturerMenu();
+                    case 1 -> runManufacturerMenu();
+                    case 2 -> runTechAPIMenu();
+                    case 3 -> runReportsMenu();
+                    case 4 -> ;
+                    case 5 -> ;
+                    case 6 -> ;
+                    case 10 -> ;
+                    case 11 -> ;
                     //TODO - Add options
                     default ->  System.out.println("Invalid option entered" + option);
                 }
@@ -94,13 +101,14 @@ public class Driver {
                     case 2 -> deleteManufacturer();
                     case 3 -> updateManufacturer();
                     case 4 -> System.out.println(manufacturerAPI.listManufacturers());
-                    case 5-> findManufacturer();
-                    case 6-> listByManufacturerName();
-                    default->  System.out.println("Invalid option entered" + option);
+                    case 5 -> findManufacturer();
+                    case 6 -> listByManufacturerName();
+                    default -> System.out.println("Invalid option entered" + option);
                 }
                 ScannerInput.readNextLine("\n Press the enter key to continue");
                 option = manufacturerMenu();
             }
+            runMainMenu();
         }
 
         private void addManufacturer() {
@@ -161,7 +169,7 @@ public class Driver {
 
         private int techAPIMenu() {
             System.out.println(""" 
-                -----Technology Store Menu----- 
+                -----Technology Store Menu-----
                | 1) Add a Tech Device           |
                | 2) Delete a Tech Device        |
                | 3) List all Tech Devices       |
@@ -171,8 +179,31 @@ public class Driver {
             return ScannerInput.readNextInt("==>>");
         }
 
+        private void runTechAPIMenu() {
+            int option = techAPIMenu();
+            while (option != 0) {
+                switch (option) {
+                    case 1 -> addTechDevice;
+                    case 2 -> deleteTechDevice;
+                    case 3 -> listTechDevice;
+                    case 4 -> updateTechDevice;
+                    default -> System.out.println("Invalid option entered" + option);
+                }
+                ScannerInput.readNextLine("\n Press the enter key to continue");
+                option = reportsMenu();
+            }
+            runMainMenu();
+        }
 
-
+    private int reportsMenu() {
+        System.out.println(""" 
+                --------Reports Menu ---------
+               | 1) Manufacturers Overview    |
+               | 2) Technology Overview       |
+               | 0) Return to main menu       |
+                 -----------------------------""");
+        return ScannerInput.readNextInt("==>>");
+    }
 
     public void runReportsMenu(){
         int option = reportsMenu();
@@ -180,44 +211,75 @@ public class Driver {
             switch (option) {
                 case 1-> runManufacturerReports();
                 case 2-> System.out.println("TODO - case 2");
-                default->  System.out.println("Invalid option entered" + option);
+                default -> System.out.println("Invalid option entered" + option);
             }
             ScannerInput.readNextLine("\n Press the enter key to continue");
             option = reportsMenu();
         }
+        runMainMenu();
     }
-    private int reportsMenu() {
-        System.out.println(""" 
-                --------Reports Menu ---------
-               | 1) Manufacturers Overview    | 
-               | 2) Technology Overview         |
-               | 0) Return to main menu       | 
-                 -----------------------------  """);
-        return ScannerInput.readNextInt("==>>");
-    }
+
 
     private int manufacturerReportsMenu() {
         System.out.println(""" 
                 ---------- Manufacturers Reports Menu  -------------
-               | 1) List Manufacturers                              | 
+               | 1) List Manufacturers                              |
                | 2) List Manufacturers from a given manufacturer    |
                | 3) List Manufacturers by a given name              |
-               | 0) Return to main menu                             | 
-                 ---------------------------------------------------  """);
+               | 0) Return to main menu                             |
+                 ---------------------------------------------------""");
         return ScannerInput.readNextInt("==>>");
     }
+
     public void runManufacturerReports() {
         int option = manufacturerReportsMenu();
         while (option != 0) {
             switch (option) {
                 case 1-> System.out.println(manufacturerAPI.listManufacturers());
                 case 2-> System.out.println("todo - Case 2");
-                case 3-> System.out.println("todo - Case 3");
+                case 3-> System.out.println(manufacturerAPI.listAllByManufacturerName());
                 default->  System.out.println("Invalid option entered" + option);
             }
             ScannerInput.readNextLine("\n Press the enter key to continue");
             option =  manufacturerReportsMenu();
         }
+        runMainMenu();
+    }
+
+    private int techReportMenu() {
+        System.out.println(""" 
+                ---------- Technology Reports Menu  -------------
+               | 1) List all Technology                             |
+               | 2) List all SmartBands                             |
+               | 3) List all Smart watch                            |
+               | 4) List all Tables                                 |
+               | 5) List all devices above a price                  |
+               | 6) List all devices below a price                  |
+               | 7) List all tablets by operating system            |
+               | 8) List the top five most expensive smart watches  |
+               | 0) Return to main menu                             |
+                 ---------------------------------------------------""");
+        return ScannerInput.readNextInt("==>>");
+    }
+
+    public void runTechReportMenu() {
+        int option = manufacturerReportsMenu();
+        while (option != 0) {
+            switch (option) {
+                case 1 -> System.out.println(TechnologyDeviceAPI.listAllTech);
+                case 2 -> System.out.println(TechnologyDeviceAPI.listAllSmartBands);
+                case 3 -> System.out.println(TechnologyDeviceAPI.listAllSmartWatches);
+                case 4 -> System.out.println(TechnologyDeviceAPI.listAllTables);
+                case 5 -> System.out.println(TechnologyDeviceAPI.listTechDeviceBelowAPrice());
+                case 6 -> System.out.println(TechnologyDeviceAPI.listTechDeviceAboveAPrice());
+                case 7 -> System.out.println(TechnologyDeviceAPI.listAllTabletsByOS);
+                case 8 -> System.out.println(TechnologyDeviceAPI.listTopFiveExpensiveSmartWatches);
+                default -> System.out.println("Invalid option entered" + option);
+            }
+            ScannerInput.readNextLine("\n Press the enter key to continue");
+            option = techReportMenu();
+        }
+        runMainMenu();
     }
 
 //todo update methods counting methods
@@ -238,17 +300,14 @@ public class Driver {
 //TODO- write any helper methods that are required
 
 
-        private Manufacturer getManufacturerByName(){
-            String manufacturerName = ScannerInput.readNextLine("Please enter the manufacturer's name: ");
-            if (manufacturerAPI.isValidManufacturer(manufacturerName)){
-                return manufacturerAPI.getManufacturerByName(manufacturerName);
-            }
-            else{
-                return null;
-            }
+    private Manufacturer getManufacturerByName(){
+        String manufacturerName = ScannerInput.readNextLine("Please enter the manufacturer's name: ");
+        if (manufacturerAPI.isValidManufacturer(manufacturerName)){
+            return manufacturerAPI.getManufacturerByName(manufacturerName);
         }
-
-
-
+        else{
+            return null;
+        }
     }
 
+}
