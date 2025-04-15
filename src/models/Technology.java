@@ -5,6 +5,7 @@ public class Technology {
     private String id;
     private String modelName;
     private Manufacturer manufacturer;
+    Technology technology = new Technology(double price,String id,);
 
     public Technology(double price,String id,String modelName,Manufacturer manufacturer){
         setId(id);
