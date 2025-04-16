@@ -2,7 +2,7 @@ package models;
 
 import utils.Utilities;
 
-public class ComputingDevice extends Technology{
+public abstract class ComputingDevice extends Technology{
     private int storage;
     private String processor;
     public ComputingDevice(double price, String id, String modelName, Manufacturer manufacturer,int storage,String processor){

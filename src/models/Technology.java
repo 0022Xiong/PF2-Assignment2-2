@@ -1,13 +1,15 @@
 package models;
 
-public class Technology {
+import utils.Utilities;
+
+public abstract class Technology {
     private double price;
     private String id;
     private String modelName;
     private Manufacturer manufacturer;
     public Technology(double price,String id,String modelName,Manufacturer manufacturer){
         this.price = price;
-        this.id = id;
+        this.id = Utilities.truncateString(id,10);
         this.modelName = modelName;
        this.manufacturer = manufacturer;
     }
@@ -16,6 +18,7 @@ public class Technology {
     }
 
     public void setPrice(double price) {
+        if (price >= 20)
         this.price = price;
     }
 
@@ -24,6 +27,7 @@ public class Technology {
     }
 
     public void setId(String id) {
+        if(Utilities.validStringlength(id,10))
         this.id = id;
     }
 
@@ -49,10 +53,8 @@ public class Technology {
                "price" + price + "\n" +
                 "name and number of employees" + manufacturer;
     }
-    public double getInsurancePremium(double exchangeRate){
-        return price*exchangeRate;
-    }
-    public String connectToInternet(String connectStatus){
-        return connectStatus;
-    }
+    public abstract double getInsurancePremium();
+
+    public abstract String connectToInternet();
+
 }

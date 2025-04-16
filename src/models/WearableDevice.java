@@ -1,7 +1,7 @@
 package models;
 import utils.Utilities;
 
-public class WearableDevice extends Technology{
+public abstract class WearableDevice extends Technology{
 
     private String material;
     private String size;
