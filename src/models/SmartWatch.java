@@ -3,7 +3,7 @@ import utils.DisplayTypeUtility;
 
 
 public class SmartWatch extends WearableDevice{
-    private String displayType;
+    private String displayType="LCD";
     public SmartWatch(double price, String id, String modelName, Manufacturer manufacturer,String material,String size,String displayType){
         super(price,id,modelName,manufacturer,material,size);
         setDisplayType(displayType);
@@ -14,9 +14,6 @@ public class SmartWatch extends WearableDevice{
     public void setDisplayType(String displayType) {
        if(DisplayTypeUtility.isValidDisplayType(displayType)){
         this.displayType = displayType;
-       }
-       else{
-           this.displayType = "LCD";
        }
     }
     public String connectToInternet() {
