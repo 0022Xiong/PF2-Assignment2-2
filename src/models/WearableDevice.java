@@ -17,7 +17,7 @@ public class WearableDevice extends Technology{
     }
 
     public void setMaterial(String material) {
-        if(Utilities.validStringlength(material,20)))
+        if(Utilities.validStringlength(material,20))
         this.material = material;
     }
 
@@ -30,6 +30,7 @@ public class WearableDevice extends Technology{
         this.size = size;
     }
     public String toString(){
-        return "price:" + price;
+        return super.toString() + "material" + material + "\n" +
+                "size" + size;
     }
 }

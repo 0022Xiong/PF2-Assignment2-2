@@ -5,13 +5,11 @@ public class Technology {
     private String id;
     private String modelName;
     private Manufacturer manufacturer;
-    Technology technology = new Technology(double price,String id,);
-
     public Technology(double price,String id,String modelName,Manufacturer manufacturer){
-        setId(id);
-        setModelName(modelName);
-        setManufacturer(manufacturer);
-        setPrice(price);
+        this.price = price;
+        this.id = id;
+        this.modelName = modelName;
+       this.manufacturer = manufacturer;
     }
     public double getPrice() {
         return price;
