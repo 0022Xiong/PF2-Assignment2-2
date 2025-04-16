@@ -1,5 +1,4 @@
 package models;
-import models.Technology;
 import utils.Utilities;
 
 public class WearableDevice extends Technology{
