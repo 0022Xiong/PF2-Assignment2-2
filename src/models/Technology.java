@@ -48,10 +48,10 @@ public abstract class Technology {
     }
 
     public String toString(){
-        return "id" + id +"\n" +
-               "model name" + modelName +"\n" +
-               "price" + price + "\n" +
-                "name and number of employees" + manufacturer;
+        return "ID: " + id +"\n" +
+               "Model name: " + modelName +"\n" +
+               "Price: " + price + "\n" +
+               "Name and number of employees: " + manufacturer;
     }
     public abstract double getInsurancePremium();
 

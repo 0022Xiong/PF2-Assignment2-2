@@ -13,7 +13,7 @@ public class Driver {
 
 
 
-    private TechnologyDeviceAPI techAPI;
+    private TechnologyDeviceAPI technologyDeviceAPI;
     private ManufacturerAPI manufacturerAPI;
 
 
@@ -237,7 +237,7 @@ public class Driver {
             switch (option) {
                 case 1-> System.out.println(manufacturerAPI.listManufacturers());
                 case 2-> System.out.println("todo - Case 2");
-                case 3-> System.out.println(manufacturerAPI.listAllByManufacturerName());
+                case 3-> System.out.println("todo");
                 default->  System.out.println("Invalid option entered" + option);
             }
             ScannerInput.readNextLine("\n Press the enter key to continue");
@@ -266,14 +266,14 @@ public class Driver {
         int option = manufacturerReportsMenu();
         while (option != 0) {
             switch (option) {
-                case 1 -> System.out.println(TechnologyDeviceAPI.listAllTech);
-                case 2 -> System.out.println(TechnologyDeviceAPI.listAllSmartBands);
-                case 3 -> System.out.println(TechnologyDeviceAPI.listAllSmartWatches);
-                case 4 -> System.out.println(TechnologyDeviceAPI.listAllTables);
-                case 5 -> System.out.println(TechnologyDeviceAPI.listTechDeviceBelowAPrice());
-                case 6 -> System.out.println(TechnologyDeviceAPI.listTechDeviceAboveAPrice());
-                case 7 -> System.out.println(TechnologyDeviceAPI.listAllTabletsByOS);
-                case 8 -> System.out.println(TechnologyDeviceAPI.listTopFiveExpensiveSmartWatches);
+                case 1 -> System.out.println(technologyDeviceAPI.listAllTechnologyDevices());
+                case 2 -> System.out.println(technologyDeviceAPI.listAllSmartBands());
+                case 3 -> System.out.println(technologyDeviceAPI.listAllSmartWatches());
+                case 4 -> System.out.println(technologyDeviceAPI.listAllTablets());
+                case 5 -> System.out.println(listAllTechnologyBelowPrice());
+                case 6 -> System.out.println(listAllTechnologyAbovePrice());
+                case 7 -> System.out.println(listAllTabletsByOperatingSystem());
+                case 8 -> System.out.println(technologyDeviceAPI.listTopFiveExpensiveSmartWatches);
                 default -> System.out.println("Invalid option entered" + option);
             }
             ScannerInput.readNextLine("\n Press the enter key to continue");
@@ -281,6 +281,21 @@ public class Driver {
         }
         runMainMenu();
     }
+
+        private String listAllTechnologyBelowPrice() {
+            int price = ScannerInput.readNextInt("Enter the price: ");
+            return technologyDeviceAPI.listAllTechnologyBelowPrice(price);
+        }
+
+        private String listAllTechnologyAbovePrice() {
+            int price = ScannerInput.readNextInt("Enter the price: ");
+            return technologyDeviceAPI.listAllTechnologyAbovePrice(price);
+        }
+
+        private String listAllTabletsByOperatingSystem() {
+            String os = ScannerInput.readNextLine("Enter the operating system");
+            return technologyDeviceAPI.listAllTabletsByOperatingSystem(os);
+        }
 
 //todo update methods counting methods
 
