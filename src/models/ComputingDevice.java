@@ -17,7 +17,7 @@ public abstract class ComputingDevice extends Technology{
 
     public void setStorage(int storage) {
         if(Utilities.validRange(storage,8,128)&& storage%8 == 0)
-        this.storage = storage;
+            this.storage = storage;
     }
 
     public String getProcessor() {
@@ -26,10 +26,10 @@ public abstract class ComputingDevice extends Technology{
 
     public void setProcessor(String processor) {
         if(Utilities.validStringlength(processor,20))
-        this.processor = processor;
+            this.processor = processor;
     }
    public String toString(){
-        return  toString() + "storage" + storage +"\n"
+        return  super.toString() + "storage" + storage +"\n"
                 +"processor" + processor;
    }
 }

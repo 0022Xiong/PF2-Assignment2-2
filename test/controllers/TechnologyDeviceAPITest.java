@@ -34,6 +34,8 @@ class TechnologyDeviceAPITest {
 
     @AfterEach
     void tearDown() {
+        populatedDevices = emptyDevices = null;
+        apple = samsung = hitachi = tesla = null;
     }
     @Nested
     class GettersAndSetters {

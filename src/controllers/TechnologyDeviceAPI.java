@@ -117,11 +117,7 @@ public class TechnologyDeviceAPI implements ISerializer {
     //TODO - Number methods
 
     public int numberOfTechnologyDevices() {
-        int number = 0;
-        for(Technology technology : technologyList) {
-            number++;
-        }
-        return number;
+        return technologyList.size();
     }
 
     public int numberOfTechnologyByChosenManufacturer(Manufacturer manufacturer) {
@@ -288,23 +284,90 @@ public class TechnologyDeviceAPI implements ISerializer {
         }
     }
 
-
     //TODO - sort methods
+    public List<Technology> sortByPriceDescending() {
+//        List<Technology> priceDescendingTechnologyList = null;
+//        priceDescendingTechnologyList.addFirst(technologyList.getFirst());
+//        for(Technology technology : technologyList) {
+//            for (int index = 0; index < numberOfTechnologyDevices(); index++) {
+//                if(technology.getPrice() >= priceDescendingTechnologyList.get(index).getPrice()){
+//                    priceDescendingTechnologyList.add(index,technology);
+//                }
+//                else {
+//                    priceDescendingTechnologyList.add(index+1,technology);
+//                }
+//            }
+//        }
+//        return priceDescendingTechnologyList;
+//
+        int biggestIndex = 0;
+        double biggestPrice = technologyList.getFirst().getPrice();
+        for (int index = 0; index < numberOfTechnologyDevices(); index++) {
+            if((technologyList.get(index).getPrice() > biggestPrice)){
+                swapTechnology(technologyList, biggestIndex, index);
+                biggestPrice = technologyList.get(index).getPrice();
+                biggestIndex = index;
+            }
+        }
+        return technologyList;
+    }
+
+    public List<Technology> sortByPriceAscending() {
+//        int biggestIndex = 0;
+//        double biggestPrice = technologyList.getFirst().getPrice();
+//        for (int index = 0; index < numberOfTechnologyDevices(); index++) {
+//            if((technologyList.get(index).getPrice() < biggestPrice)){
+//                swapTechnology(technologyList, biggestIndex, index);
+//                biggestPrice = technologyList.get(index).getPrice();
+//                biggestIndex = index;
+//            }
+//        }
+//        return technologyList;
+        return sortByPriceDescending().reversed();
+    }
+
+    private void swapTechnology (List<Technology> technologyList, int i, int j) {
+        Technology inProcess;
+        inProcess = technologyList.get(i);
+        technologyList.set(i, technologyList.get(j));
+        technologyList.set(j, inProcess);
+    }
 
     //TODO Top 5 methods
-//    public List<Technology> topFiveMostExpensiveTechnology() {
-//        List<Technology> arrangeByPrice;
-//        List<Technology> topFiveTech;
-//
-//        if(numberOfTechnologyDevices() >= 5){
-//            int index = 0;
-//            for(Technology technology : technologyList) {
-//                if(technology.getPrice())
-//            }
-//            topFiveTech.add(technologyList.get(index));
-//        }
-//        return topFiveTech;
-//    }
+    public List<Technology> topFiveMostExpensiveTechnology() {
+        if(numberOfTechnologyDevices() >= 5) {
+            return sortByPriceDescending().subList(0, 5);
+        }
+        else {
+            return sortByPriceDescending().subList(0, technologyList.size());
+        }
+    }
+
+    public List<Technology> topFiveMostExpensiveSmartWatch() {
+        List<Technology> fiveMostExpSmartWatch = new ArrayList<>();
+        for(Technology technology : sortByPriceDescending()) {
+            if(technology instanceof SmartWatch) {
+                fiveMostExpSmartWatch.add(technology);
+                if(fiveMostExpSmartWatch.size() == 5) {
+                    break;
+                }
+            }
+        }
+        return fiveMostExpSmartWatch;
+    }//optimized by chat.baidu.com at 2025/4/19 19:00
+
+    public List<Technology> topFiveMostExpensiveTablet() {
+        List<Technology> fiveMostExpTablet = new ArrayList<>();
+        for(Technology technology : sortByPriceDescending()) {
+            if(technology instanceof SmartWatch) {
+                fiveMostExpTablet.add(technology);
+                if(fiveMostExpTablet.size() == 5) {
+                    break;
+                }
+            }
+        }
+        return fiveMostExpTablet;
+    }//optimized by chat.baidu.com at 2025/4/19 19:00
 
     public boolean isValidId(String id) {
         for (Technology technology : technologyList) {
