@@ -1,5 +1,8 @@
 package models;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -8,13 +11,13 @@ class TechnologyTest {
 
 
 
-    @org.junit.jupiter.api.AfterEach
+    @AfterEach
     void tearDown() {
         validTablet=invalidTablet=null;
     }
     private Tablet validTablet, invalidTablet;
 
-    @org.junit.jupiter.api.BeforeEach
+    @BeforeEach
     public void setUp() {
         Manufacturer manufacturer = new Manufacturer("Samsung", 333);
         Manufacturer invalidManufacturer = new Manufacturer("ABCDEFGHIJKLMNOPQRSTU", 0);

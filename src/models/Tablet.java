@@ -4,7 +4,7 @@ import utils.OperatingSystemUtility;
 
 public class Tablet extends ComputingDevice {
     private String operatingSystem = "Window";
-    public Tablet(String id, double price, Manufacturer manufacturer, String modelName, String processor,int storage, String operatingSystem){
+    public Tablet(String id, double price, Manufacturer manufacturer, String modelName, String processor, int storage, String operatingSystem){
         super(price, id, modelName, manufacturer, storage, processor);
         setOperatingSystem(operatingSystem);
     }
@@ -15,7 +15,7 @@ public class Tablet extends ComputingDevice {
 
     public void setOperatingSystem(String operatingSystem) {
         if(OperatingSystemUtility.isValidOperatingSystem(operatingSystem))
-        this.operatingSystem = operatingSystem;
+            this.operatingSystem = operatingSystem;
     }
     public String connectToInternet() {
         return "Connects to the internet via Wi-Fi";

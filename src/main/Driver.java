@@ -21,10 +21,10 @@ public class Driver {
             new Driver().start();
         }
 
-        public void start() {
-
-            manufacturerAPI = new ManufacturerAPI(new File("manufacturers.xml"));
+        public void start() throws Exception {
             //TODO - construct fields
+            manufacturerAPI = new ManufacturerAPI(new File("manufacturers.xml"));
+            technologyDeviceAPI = new TechnologyDeviceAPI(new File("technologyDevices.xml"));
 
             //TODO - load all data once the serializers are set up
             runMainMenu();
@@ -50,18 +50,18 @@ public class Driver {
     }
     //// search todo by different criteria i.e. look at the list methods and give options based on that.
 // sort todo (and give a list of options - not a recurring menu thou)
-        private void runMainMenu() {
+        private void runMainMenu() throws Exception {
             int option = mainMenu();
             while (option != 0) {
                 switch (option) {
                     case 1 -> runManufacturerMenu();
                     case 2 -> runTechAPIMenu();
                     case 3 -> runReportsMenu();
-                    case 4 -> ;
-                    case 5 -> ;
-                    case 6 -> ;
-                    case 10 -> ;
-                    case 11 -> ;
+                    case 4 -> searchManufacturers();
+                    case 5 -> searchTechnologyDevices();
+                    case 6 -> sortTechnologyDevices();
+                    case 10 -> saveAll();
+                    case 11 -> loadAll();
                     //TODO - Add options
                     default ->  System.out.println("Invalid option entered" + option);
                 }
@@ -69,6 +69,28 @@ public class Driver {
                 option = mainMenu();
             }
             exitApp();
+        }
+
+        private void searchManufacturers() {
+
+        }
+
+        private void searchTechnologyDevices() {
+
+        }
+
+        private void sortTechnologyDevices() {
+
+        }
+
+        private void saveAll() throws Exception {
+            manufacturerAPI.save();
+            technologyDeviceAPI.save();
+        }
+
+        private void loadAll() throws Exception {
+            manufacturerAPI.load();
+            technologyDeviceAPI.load();
         }
 
         private void exitApp(){
@@ -80,8 +102,9 @@ public class Driver {
         //----------------------
         //  Manufacturer Menu Items
         //----------------------
-        private int manufacturerMenu() {
-            System.out.println("""
+
+    private int manufacturerMenu() {
+        System.out.println("""
                 --------Manufacturer Menu---------
                |  1) Add a manufacturer           |
                |  2) Delete a manufacturer        |
@@ -90,10 +113,10 @@ public class Driver {
                |  5) Find a manufacturer          |
                |  0) Return to main menu          |
                 ----------------------------------""");
-            return ScannerInput.readNextInt("==>>");
-        }
+        return ScannerInput.readNextInt("==>>");
+    }
 
-        private void runManufacturerMenu() {
+        private void runManufacturerMenu() throws Exception {
             int option = manufacturerMenu();
             while (option != 0) {
                 switch (option) {
@@ -167,8 +190,8 @@ public class Driver {
         //  Tech Store Menu
         //---------------------
 
-        private int techAPIMenu() {
-            System.out.println(""" 
+    private int techAPIMenu() {
+        System.out.println(""" 
                 -----Technology Store Menu-----
                | 1) Add a Tech Device           |
                | 2) Delete a Tech Device        |
@@ -176,24 +199,145 @@ public class Driver {
                | 4) Update Tech Device          |
                | 0) Return to main menu         |
                 ----------------------------""");
-            return ScannerInput.readNextInt("==>>");
-        }
+        return ScannerInput.readNextInt("==>>");
+    }
 
-        private void runTechAPIMenu() {
+        private void runTechAPIMenu() throws Exception {
             int option = techAPIMenu();
             while (option != 0) {
                 switch (option) {
-                    case 1 -> addTechDevice;
-                    case 2 -> deleteTechDevice;
-                    case 3 -> listTechDevice;
-                    case 4 -> updateTechDevice;
+                    case 1 -> addTechDevice();
+                    case 2 -> deleteTechDevice();
+                    case 3 -> System.out.println(technologyDeviceAPI.listAllTechnologyDevices());
+                    case 4 -> updateTechDevice();
                     default -> System.out.println("Invalid option entered" + option);
                 }
                 ScannerInput.readNextLine("\n Press the enter key to continue");
-                option = reportsMenu();
+                option = techAPIMenu();
             }
             runMainMenu();
         }
+
+        private void addTechDevice() throws Exception {
+            int option = ScannerInput.readNextInt("""
+                    You are going to add:
+                    1) Smart Band
+                    2) Smart Watch
+                    3) Tablet
+                    """);
+            while (option != 0) {
+                switch (option) {
+                    case 1 -> addSmartBand();
+                    case 2 -> addSmartWatch();
+                    case 3 -> addTablet();
+                    default -> System.out.println("Invalid option entered" + option);
+                }
+                ScannerInput.readNextLine("\n Press the enter key to continue");
+                option = techAPIMenu();
+            }
+            runMainMenu();
+        }
+
+            private void addSmartBand() {
+                Technology smartBand = newSmartBand();
+                if (technologyDeviceAPI.addTechnologyDevice(smartBand)){
+                    System.out.println("Add successful");
+                }
+                else{
+                    System.out.println("Add not successful");
+                }
+            }
+
+            private void addSmartWatch() {
+                Technology smartWatch = newSmartWatch();
+                if (technologyDeviceAPI.addTechnologyDevice(smartWatch)){
+                    System.out.println("Add successful");
+                }
+                else{
+                    System.out.println("Add not successful");
+                }
+            }
+
+            private void addTablet() {
+                Technology tablet = newTablet();
+                if (technologyDeviceAPI.addTechnologyDevice(tablet)){
+                    System.out.println("Add successful");
+                }
+                else{
+                    System.out.println("Add not successful");
+                }
+            }
+
+        private void deleteTechDevice() throws Exception {
+            System.out.println(technologyDeviceAPI.listAllTechnologyDevices());
+            int option = ScannerInput.readNextInt("""
+                    Choose a way to delete technology devices
+                    1) By index
+                    2) By ID
+                    """);
+            while (option != 0) {
+                switch (option) {
+                    case 1 -> deleteByIndex();
+                    case 2 -> deleteById();
+                    default -> System.out.println("Invalid option entered" + option);
+                }
+                ScannerInput.readNextLine("\n Press the enter key to continue");
+                option = techAPIMenu();
+            }
+            runMainMenu();
+        }
+
+            private void deleteByIndex() {
+                int deleteIndex = ScannerInput.readNextInt("Enter the index of the technology device you want to delete: ");
+                if(technologyDeviceAPI.deleteTechnologyByIndex(deleteIndex) != null) {
+                    System.out.println("Delete successful");
+                }
+                else {
+                    System.out.println("Delete not successful");
+                }
+            }
+
+            private void deleteById() {
+                String deleteId = ScannerInput.readNextLine("Enter the ID of the technology device you want to delete: ");
+                if(technologyDeviceAPI.deleteTechnologyById(deleteId) != null) {
+                    System.out.println("Delete successful");
+                }
+                else {
+                    System.out.println("Delete not successful");
+                }
+            }
+
+        private void updateTechDevice() throws Exception {
+            int option = ScannerInput.readNextInt("""
+                    You are going to update:
+                    1) Smart Band
+                    2) Smart Watch
+                    3) Tablet
+                    """);
+            while (option != 0) {
+                switch (option) {
+                    case 1 -> updateSmartBand();
+                    case 2 -> updateSmartWatch();
+                    case 3 -> updateTablet();
+                    default -> System.out.println("Invalid option entered" + option);
+                }
+                ScannerInput.readNextLine("\n Press the enter key to continue");
+                option = techAPIMenu();
+            }
+            runMainMenu();
+        }
+
+            private void updateSmartBand() {
+
+            }
+
+            private void updateSmartWatch() {
+
+            }
+
+            private void updateTablet() {
+
+            }
 
     private int reportsMenu() {
         System.out.println(""" 
@@ -205,12 +349,12 @@ public class Driver {
         return ScannerInput.readNextInt("==>>");
     }
 
-    public void runReportsMenu(){
+    public void runReportsMenu() throws Exception {
         int option = reportsMenu();
         while (option != 0) {
             switch (option) {
                 case 1-> runManufacturerReports();
-                case 2-> System.out.println("TODO - case 2");
+                case 2-> runTechReportMenu();
                 default -> System.out.println("Invalid option entered" + option);
             }
             ScannerInput.readNextLine("\n Press the enter key to continue");
@@ -231,7 +375,7 @@ public class Driver {
         return ScannerInput.readNextInt("==>>");
     }
 
-    public void runManufacturerReports() {
+    public void runManufacturerReports() throws Exception {
         int option = manufacturerReportsMenu();
         while (option != 0) {
             switch (option) {
@@ -262,7 +406,7 @@ public class Driver {
         return ScannerInput.readNextInt("==>>");
     }
 
-    public void runTechReportMenu() {
+    public void runTechReportMenu() throws Exception {
         int option = manufacturerReportsMenu();
         while (option != 0) {
             switch (option) {
@@ -273,7 +417,7 @@ public class Driver {
                 case 5 -> System.out.println(listAllTechnologyBelowPrice());
                 case 6 -> System.out.println(listAllTechnologyAbovePrice());
                 case 7 -> System.out.println(listAllTabletsByOperatingSystem());
-                case 8 -> System.out.println(technologyDeviceAPI.listTopFiveExpensiveSmartWatches);
+                case 8 -> System.out.println(technologyDeviceAPI.topFiveMostExpensiveSmartWatch());
                 default -> System.out.println("Invalid option entered" + option);
             }
             ScannerInput.readNextLine("\n Press the enter key to continue");
@@ -293,14 +437,53 @@ public class Driver {
         }
 
         private String listAllTabletsByOperatingSystem() {
-            String os = ScannerInput.readNextLine("Enter the operating system");
+            String os = ScannerInput.readNextLine("Enter the operating system: ");
             return technologyDeviceAPI.listAllTabletsByOperatingSystem(os);
         }
 
 //todo update methods counting methods
+    private Manufacturer newManufacturer() {
+        String manufacturerName = ScannerInput.readNextLine("Please enter the manufacturer name: ");
+        int manufacturerNumEmployees = ScannerInput.readNextInt("Please enter the number of employees: ");
+        Manufacturer manufacturer = new Manufacturer(manufacturerName, manufacturerNumEmployees);
+        return manufacturer;
+    }
 
+    private Technology newSmartBand() {
+        double price = ScannerInput.readNextDouble("Enter price: ");
+        String id = ScannerInput.readNextLine("Enter ID: ");
+        String modelName = ScannerInput.readNextLine("Enter name: ");
+        Manufacturer manufacturer = newManufacturer();
+        String material = ScannerInput.readNextLine("Enter material: ");
+        String size = ScannerInput.readNextLine("Enter size: ");
+        boolean heartRateMonitor = Utilities.YNtoBoolean(ScannerInput.readNextChar("Have heartRateMonitor? (y/n): "));
+        SmartBand smartBand = new SmartBand(price, id, modelName, manufacturer, material, size, heartRateMonitor);
+        return smartBand;
+    }
 
+    private Technology newSmartWatch() {
+        double price = ScannerInput.readNextDouble("Enter price: ");
+        String id = ScannerInput.readNextLine("Enter ID: ");
+        String modelName = ScannerInput.readNextLine("Enter name: ");
+        Manufacturer manufacturer = newManufacturer();
+        String material = ScannerInput.readNextLine("Enter material: ");
+        String size = ScannerInput.readNextLine("Enter size: ");
+        String displayType = ScannerInput.readNextLine("Enter displayType: ");
+        SmartWatch smartWatch = new SmartWatch(price, id, modelName, manufacturer, material, size, displayType);
+        return smartWatch;
+    }
 
+    private Technology newTablet() {
+        String id = ScannerInput.readNextLine("Enter ID: ");
+        double price = ScannerInput.readNextDouble("Enter price: ");
+        Manufacturer manufacturer = newManufacturer();
+        String modelName = ScannerInput.readNextLine("Enter name: ");
+        String processor = ScannerInput.readNextLine("Enter processor: ");
+        int storage = ScannerInput.readNextInt("Enter storage: ");
+        String operatingSystem = ScannerInput.readNextLine("Enter OS: ");
+        Tablet tablet = new Tablet(id, price, manufacturer, modelName, processor, storage, operatingSystem);
+        return tablet;
+    }
 
         //---------------------
         //  General Menu Items

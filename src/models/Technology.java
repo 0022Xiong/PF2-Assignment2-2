@@ -8,10 +8,10 @@ public abstract class Technology {
     private String modelName;
     private Manufacturer manufacturer;
     public Technology(double price,String id,String modelName,Manufacturer manufacturer){
-        this.price = price;
+        setPrice(price);
         this.id = Utilities.truncateString(id,10);
         this.modelName = modelName;
-       this.manufacturer = manufacturer;
+        this.manufacturer = manufacturer;
     }
     public double getPrice() {
         return price;

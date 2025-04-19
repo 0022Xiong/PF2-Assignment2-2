@@ -1,13 +1,19 @@
 package models;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+//import org.junit.After;
+//import org.junit.Before;
+//import org.junit.Test;
+//
+//
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertTrue;
 
 public class TabletTest {
 
@@ -16,12 +22,12 @@ public class TabletTest {
 
 
 
-    @After
+    @AfterEach
     public void tearDown() {
         validTablet=invalidTablet=null;
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         Manufacturer manufacturer = new Manufacturer("Samsung", 333);
         Manufacturer invalidManufacturer = new Manufacturer("ABCDEFGHIJKLMNOPQRSTU", 0);
