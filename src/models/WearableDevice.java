@@ -28,6 +28,8 @@ public abstract class WearableDevice extends Technology{
         if(Utilities.validStringlength(size,10))
         this.size = size;
     }
+    public abstract double getInsurancePremium();
+    public abstract String connectToInternet();
     public String toString(){
         return super.toString() + "material" + material + "\n" +
                 "size" + size;
