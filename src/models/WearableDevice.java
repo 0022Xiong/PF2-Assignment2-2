@@ -5,10 +5,10 @@ public abstract class WearableDevice extends Technology{
 
     private String material;
     private String size;
-    public WearableDevice(String modelName, double price, Manufacturer manufacturer, String id, String material, String size) {
+    public WearableDevice(String modelName, double price, Manufacturer manufacturer, String id, String size,  String material) {
         super(modelName, price, manufacturer, id);
-        this.material= Utilities.truncateString(material,20);
         this.size=Utilities.truncateString(size,10);
+        this.material= Utilities.truncateString(material,20);
     }
 
     public String getMaterial() {

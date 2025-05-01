@@ -35,44 +35,50 @@ public class TechnologyDeviceAPI implements ISerializer {
     }
 
     public boolean updateTablet(String id, Tablet updatedDetails) {
-        int indexUpdate = -1;
-        for(Technology technology : technologyList) {
-            if(technology instanceof Tablet && technology.getId().equals(id)) {
-                 indexUpdate = technologyList.indexOf(technology);
+//        if(isValidId(id)){
+            int indexUpdate = -1;
+            for(Technology technology : technologyList) {
+                if(technology instanceof Tablet && technology.getId().equals(id)) {
+                    indexUpdate = technologyList.indexOf(technology);
+                }
             }
-        }
-        if(indexUpdate != -1) {
-            technologyList.set(indexUpdate, updatedDetails);
-            return true;
-        }
+            if(indexUpdate != -1) {
+                technologyList.set(indexUpdate, updatedDetails);
+                return true;
+            }
+//        }
         return false;
     }
 
     public boolean updateSmartWatch(String id, SmartWatch updatedDetails) {
-        int indexUpdate = -1;
-        for(Technology technology : technologyList) {
-            if(technology instanceof SmartWatch && technology.getId().equals(id)) {
-                indexUpdate = technologyList.indexOf(technology);
+//        if(isValidId(id)){
+            int indexUpdate = -1;
+            for(Technology technology : technologyList) {
+                if(technology instanceof SmartWatch && technology.getId().equals(id)) {
+                    indexUpdate = technologyList.indexOf(technology);
+                }
             }
-        }
-        if(indexUpdate != -1) {
-            technologyList.set(indexUpdate, updatedDetails);
-            return true;
-        }
+            if(indexUpdate != -1) {
+                technologyList.set(indexUpdate, updatedDetails);
+                return true;
+            }
+//        }
         return false;
     }
 
     public boolean updateSmartBand(String id, SmartBand updatedDetails) {
-        int indexUpdate = -1;
-        for(Technology technology : technologyList) {
-            if(technology instanceof SmartBand && technology.getId().equals(id)) {
-                indexUpdate = technologyList.indexOf(technology);
+//        if(isValidId(id)){
+            int indexUpdate = -1;
+            for(Technology technology : technologyList) {
+                if(technology instanceof SmartBand && technology.getId().equals(id)) {
+                    indexUpdate = technologyList.indexOf(technology);
+                }
             }
-        }
-        if(indexUpdate != -1) {
-            technologyList.set(indexUpdate, updatedDetails);
-            return true;
-        }
+            if(indexUpdate != -1) {
+                technologyList.set(indexUpdate, updatedDetails);
+                return true;
+            }
+//        }
         return false;
     }
 
@@ -227,7 +233,7 @@ public class TechnologyDeviceAPI implements ISerializer {
             }
         }
         if(listAllTechnologyAbovePrice.isEmpty()) {
-            return "No Technology more expensive than " + price;
+            return "No technology more expensive than " + price;
         }
         else {
             return listAllTechnologyAbovePrice;
@@ -290,10 +296,12 @@ public class TechnologyDeviceAPI implements ISerializer {
             boolean swapOnRun = true;
             while(swapOnRun) {
                 swapOnRun = false;
-                for(int index = 0; index < technologyList.size(); index++) {
-                    if(technologyList.get(index).getPrice() > technologyList.get(index + 1).getPrice()) {
+                for(int index = 0; index < technologyList.size() - 1; index++) {
+//                    if(index != technologyList.size() - 1){
+                    if(technologyList.get(index).getPrice() < technologyList.get(index + 1).getPrice()) {
                         swapOnRun = true;
-                        swapTechnology(technologyList, index, index+1);
+                        swapTechnology(technologyList, index, index + 1);
+//                        }
                     }
                 }
             }
@@ -387,7 +395,13 @@ public class TechnologyDeviceAPI implements ISerializer {
     @SuppressWarnings("unchecked")
     public void load() throws Exception {
         //list of classes that you wish to include in the serialisation, separated by a comma
-        Class<?>[] classes = new Class[]{ Technology.class};
+        Class<?>[] classes = new Class[]{ Technology.class,
+                WearableDevice.class,
+                ComputingDevice.class,
+                Manufacturer.class,
+                SmartBand.class,
+                SmartWatch.class,
+                Tablet.class};
 
         //setting up the XStream object with default security and the above classes
         XStream xstream = new XStream(new DomDriver());

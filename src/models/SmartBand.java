@@ -2,8 +2,8 @@ package models;
 
 public class SmartBand extends WearableDevice{
     private boolean heartRateMonitor ;
-    public SmartBand (String modelName, double price, Manufacturer manufacturer, String id, String material, String size, boolean heartRateMonitor){
-        super(modelName, price, manufacturer, id, material, size);
+    public SmartBand (String modelName, double price, Manufacturer manufacturer, String id, String size, String material, boolean heartRateMonitor){
+        super(modelName, price, manufacturer, id, size, material);
         this.heartRateMonitor = heartRateMonitor;
     }
 

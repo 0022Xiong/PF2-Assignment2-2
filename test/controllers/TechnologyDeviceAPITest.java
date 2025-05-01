@@ -1,8 +1,6 @@
 package controllers;
 
-import models.Manufacturer;
-import models.SmartWatch;
-import models.Tablet;
+import models.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -39,8 +37,9 @@ class TechnologyDeviceAPITest {
     }
     @Nested
     class GettersAndSetters {
+        //Index
         @Test
-        void getModelName() {
+        void testGetModelNameByIndex() {
             assertEquals("smart watch1", populatedDevices.getTechnologyByIndex(0).getModelName());
             assertEquals("Smart Watch 12", populatedDevices.getTechnologyByIndex(1).getModelName());
             assertEquals("IPad 123", populatedDevices.getTechnologyByIndex(2).getModelName());
@@ -48,26 +47,149 @@ class TechnologyDeviceAPITest {
         }
 
         @Test
-        void getPrice() {
+        void testGetPriceByIndex() {
             assertEquals(129.99000549316406, populatedDevices.getTechnologyByIndex(0).getPrice());
             assertEquals(459.0, populatedDevices.getTechnologyByIndex(1).getPrice());
             assertEquals(678.0, populatedDevices.getTechnologyByIndex(2).getPrice());
             assertEquals(67.0, populatedDevices.getTechnologyByIndex(3).getPrice());
         }
 
-//        void getManufacturer() {
-//            assertEquals();
-//            assertEquals();
-//            assertEquals();
-//            assertEquals();
-//        }
+        @Test
+        void testGetManufacturerByIndex() {
+            assertEquals(samsung, populatedDevices.getTechnologyByIndex(0).getManufacturer());
+            assertEquals(samsung, populatedDevices.getTechnologyByIndex(1).getManufacturer());
+            assertEquals(samsung, populatedDevices.getTechnologyByIndex(2).getManufacturer());
+            assertEquals(samsung, populatedDevices.getTechnologyByIndex(3).getManufacturer());
+        }
 
         @Test
-        void getID() {
+        void testGetIDByIndex() {
             assertEquals("A123", populatedDevices.getTechnologyByIndex(0).getId());
             assertEquals("W1234", populatedDevices.getTechnologyByIndex(1).getId());
             assertEquals("T1223", populatedDevices.getTechnologyByIndex(2).getId());
             assertEquals("W3535", populatedDevices.getTechnologyByIndex(3).getId());
+        }
+
+        @Test
+        void testGetSizeFromWearableDeviceByIndex() {
+            assertEquals("large", ((WearableDevice) populatedDevices.getTechnologyByIndex(0)).getSize());
+            assertEquals("large", ((WearableDevice) populatedDevices.getTechnologyByIndex(1)).getSize());
+            assertEquals("small", ((WearableDevice) populatedDevices.getTechnologyByIndex(3)).getSize());
+        }
+
+        @Test
+        void testGetMaterialFromWearableDeviceByIndex() {
+            assertEquals("plastic", ((WearableDevice) populatedDevices.getTechnologyByIndex(0)).getMaterial());
+            assertEquals("plastic", ((WearableDevice) populatedDevices.getTechnologyByIndex(1)).getMaterial());
+            assertEquals("plastic", ((WearableDevice) populatedDevices.getTechnologyByIndex(3)).getMaterial());
+        }
+
+        @Test
+        void testGetProcessorFromComputingDeviceByIndex() {
+            assertEquals("Android", ((ComputingDevice) populatedDevices.getTechnologyByIndex(2)).getProcessor());
+        }
+
+        @Test
+        void testGetStorageFromComputingDeviceByIndex() {
+            assertEquals(64, ((ComputingDevice) populatedDevices.getTechnologyByIndex(2)).getStorage());
+        }
+
+        @Test
+        void testGetHeartRateMonitorFromSmartBandByIndex() {
+            assertTrue(((SmartBand) populatedDevices.getTechnologyByIndex(0)).isHeartRateMonitor());
+        }
+
+        @Test
+        void testGetDisplayTypeFromSmartWatchByIndex() {
+            assertEquals("LCD", ((SmartWatch) populatedDevices.getTechnologyByIndex(1)).getDisplayType());
+            assertEquals("LCD", ((SmartWatch) populatedDevices.getTechnologyByIndex(3)).getDisplayType());
+        }
+
+        @Test
+        void testGetOSFromTabletBuIndex() {
+            assertEquals("Android", ((Tablet) populatedDevices.getTechnologyByIndex(2)).getOperatingSystem());
+        }
+
+        @Test
+        void testGetTechnologyByIndexInvalid() {
+            assertNull(populatedDevices.getTechnologyByIndex(5));//Beyond the index
+        }
+        //ID
+        @Test
+        void testGetModelNameById() {
+            assertEquals("smart watch1", populatedDevices.getTechnologyDeviceById("A123").getModelName());
+            assertEquals("Smart Watch 12", populatedDevices.getTechnologyDeviceById("W1234").getModelName());
+            assertEquals("IPad 123", populatedDevices.getTechnologyDeviceById("T1223").getModelName());
+            assertEquals("HiTech Watch", populatedDevices.getTechnologyDeviceById("W3535").getModelName());
+        }
+
+        @Test
+        void testGetPriceById() {
+            assertEquals(129.99000549316406, populatedDevices.getTechnologyDeviceById("A123").getPrice());
+            assertEquals(459.0, populatedDevices.getTechnologyDeviceById("W1234").getPrice());
+            assertEquals(678.0, populatedDevices.getTechnologyDeviceById("T1223").getPrice());
+            assertEquals(67.0, populatedDevices.getTechnologyDeviceById("W3535").getPrice());
+        }
+
+        @Test
+        void testGetManufacturerById() {
+            assertEquals(samsung, populatedDevices.getTechnologyDeviceById("A123").getManufacturer());
+            assertEquals(samsung, populatedDevices.getTechnologyDeviceById("W1234").getManufacturer());
+            assertEquals(samsung, populatedDevices.getTechnologyDeviceById("T1223").getManufacturer());
+            assertEquals(samsung, populatedDevices.getTechnologyDeviceById("W3535").getManufacturer());
+        }
+
+        @Test
+        void testGetIDById() {
+            assertEquals("A123", populatedDevices.getTechnologyDeviceById("A123").getId());
+            assertEquals("W1234", populatedDevices.getTechnologyDeviceById("W1234").getId());
+            assertEquals("T1223", populatedDevices.getTechnologyDeviceById("T1223").getId());
+            assertEquals("W3535", populatedDevices.getTechnologyDeviceById("W3535").getId());
+        }
+
+        @Test
+        void testGetSizeFromWearableDeviceById() {
+            assertEquals("large", ((WearableDevice) populatedDevices.getTechnologyDeviceById("A123")).getSize());
+            assertEquals("large", ((WearableDevice) populatedDevices.getTechnologyDeviceById("W1234")).getSize());
+            assertEquals("small", ((WearableDevice) populatedDevices.getTechnologyDeviceById("W3535")).getSize());
+        }
+
+        @Test
+        void testGetMaterialFromWearableDeviceById() {
+            assertEquals("plastic", ((WearableDevice) populatedDevices.getTechnologyDeviceById("A123")).getMaterial());
+            assertEquals("plastic", ((WearableDevice) populatedDevices.getTechnologyDeviceById("W1234")).getMaterial());
+            assertEquals("plastic", ((WearableDevice) populatedDevices.getTechnologyDeviceById("W3535")).getMaterial());
+        }
+
+        @Test
+        void testGetProcessorFromComputingDeviceById() {
+            assertEquals("Android", ((ComputingDevice) populatedDevices.getTechnologyDeviceById("T1223")).getProcessor());
+        }
+
+        @Test
+        void testGetStorageFromComputingDeviceById() {
+            assertEquals(64, ((ComputingDevice) populatedDevices.getTechnologyDeviceById("T1223")).getStorage());
+        }
+
+        @Test
+        void testGetHeartRateMonitorFromSmartBandById() {
+            assertTrue(((SmartBand) populatedDevices.getTechnologyDeviceById("A123")).isHeartRateMonitor());
+        }
+
+        @Test
+        void testGetDisplayTypeFromSmartWatchById() {
+            assertEquals("LCD", ((SmartWatch) populatedDevices.getTechnologyDeviceById("W1234")).getDisplayType());
+            assertEquals("LCD", ((SmartWatch) populatedDevices.getTechnologyDeviceById("W3535")).getDisplayType());
+        }
+
+        @Test
+        void testGetOSFromTabletById() {
+            assertEquals("Android", ((Tablet) populatedDevices.getTechnologyDeviceById("T1223")).getOperatingSystem());
+        }
+
+        @Test
+        void testGetTechnologyDeviceByIdInvalid() {
+            assertNull(populatedDevices.getTechnologyDeviceById("1234"));
         }
 
     }
@@ -96,6 +218,9 @@ class TechnologyDeviceAPITest {
             assertEquals(1, emptyDevices.numberOfTechnologyDevices());
 
         }
+        //getters are tested above
+
+        void updateTablet
     }
 
     @Nested
@@ -134,6 +259,8 @@ class TechnologyDeviceAPITest {
     @Nested
     class ReportingMethods {
 
+
+
     }
 
     @Nested
@@ -161,6 +288,12 @@ class TechnologyDeviceAPITest {
             assertEquals("smart watch1", populatedDevices.getTechnologyByIndex(2).getModelName());
 
             assertEquals("HiTech Watch", populatedDevices.getTechnologyByIndex(3).getModelName());
+
+            populatedDevices.sortByPriceAscending();
+            assertEquals("IPad 123", populatedDevices.getTechnologyByIndex(3).getModelName());
+            assertEquals("Smart Watch 12", populatedDevices.getTechnologyByIndex(2).getModelName());
+            assertEquals("smart watch1", populatedDevices.getTechnologyByIndex(1).getModelName());
+            assertEquals("HiTech Watch", populatedDevices.getTechnologyByIndex(0).getModelName());
 
         }
 

@@ -5,8 +5,8 @@ import utils.DisplayTypeUtility;
 public class SmartWatch extends WearableDevice{
     private String displayType="LCD";
 
-    public SmartWatch(String modelName, double price, Manufacturer manufacturer, String id, String material, String size, String displayType){
-        super(modelName, price, manufacturer, id, material, size);
+    public SmartWatch(String modelName, double price, Manufacturer manufacturer, String id, String size, String material, String displayType){
+        super(modelName, price, manufacturer, id, size, material);
         setDisplayType(displayType);
     }
 

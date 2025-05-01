@@ -69,25 +69,41 @@ public class Driver {
         }
 
         private void searchManufacturers() {
-
+            Manufacturer manufacturerFind = getManufacturerByName();
+            if(manufacturerFind == null) {
+                System.out.println("No such manufacturer in the list");
+            }
+            else {
+                System.out.println(manufacturerFind);
+            }
         }
 
         private void searchTechnologyDevices() {
-
+            Technology technologyFind = getTechnologyById();
+            if(technologyFind == null) {
+                System.out.println("No such technology device in the list");
+            }
+            else {
+                System.out.println(technologyFind);
+            }
         }
 
-        private void sortTechnologyDevices() {
-            System.out.println("""
-                --------Sort Technology Menu---------
-               |  1) By Ascending                    |
-               |  2) By Descending                   |
-                -------------------------------------""");
-            int option = ScannerInput.readNextInt("==>>");
-            switch (option) {
-                case 1 -> technologyDeviceAPI.sortByPriceAscending();
-                case 2 -> technologyDeviceAPI.sortByPriceDescending();
-                default ->  System.out.println("Invalid option entered" + option);
+        private void sortTechnologyDevices() throws Exception {
+            int option = ScannerInput.readNextInt("""
+                    You are going to sort the technology by:
+                    1) Ascending by price
+                    2) Descending by price
+                    ==>>""");
+            while (option != 0) {
+                switch (option) {
+                    case 1 -> technologyDeviceAPI.sortByPriceAscending();
+                    case 2 -> technologyDeviceAPI.sortByPriceDescending();
+                    default ->  System.out.println("Invalid option entered" + option);
+                }
+                ScannerInput.readNextLine("\n Press the enter key to continue");
+                option = techAPIMenu();
             }
+            runMainMenu();
         }
 
         private void saveAll() throws Exception {
@@ -186,13 +202,6 @@ public class Driver {
             }
         }
 
-//        private void listByManufacturerName(){
-//            String manufacturer = ScannerInput.readNextLine("Enter the manufacturer's name:  ");
-//
-//            System.out.println(manufacturerAPI.listAllByManufacturerName(manufacturer));
-//        }
-
-
         //---------------------
         //  Tech Store Menu
         //---------------------
@@ -231,7 +240,7 @@ public class Driver {
                     1) Smart Band
                     2) Smart Watch
                     3) Tablet
-                    """);
+                    ==>>""");
             while (option != 0) {
                 switch (option) {
                     case 1 -> addSmartBand();
@@ -246,7 +255,7 @@ public class Driver {
         }
 
             private void addSmartBand() {
-                Technology smartBand = newSmartBand();
+                SmartBand smartBand = newSmartBand();
                 if (technologyDeviceAPI.addTechnologyDevice(smartBand)){
                     System.out.println("Add successful");
                 }
@@ -256,7 +265,7 @@ public class Driver {
             }
 
             private void addSmartWatch() {
-                Technology smartWatch = newSmartWatch();
+                SmartWatch smartWatch = newSmartWatch();
                 if (technologyDeviceAPI.addTechnologyDevice(smartWatch)){
                     System.out.println("Add successful");
                 }
@@ -266,7 +275,7 @@ public class Driver {
             }
 
             private void addTablet() {
-                Technology tablet = newTablet();
+                Tablet tablet = newTablet();
                 if (technologyDeviceAPI.addTechnologyDevice(tablet)){
                     System.out.println("Add successful");
                 }
@@ -335,15 +344,54 @@ public class Driver {
         }
 
             private void updateSmartBand() {
-
+                technologyDeviceAPI.listAllSmartBands();
+                String id = ScannerInput.readNextLine("The ID of smart band you want to update is: ");
+                if(technologyDeviceAPI.isValidId(id)){
+                    SmartBand smartBandUpdate = newSmartBand();
+                    if(technologyDeviceAPI.updateSmartBand(id, smartBandUpdate)){
+                        System.out.println("Technology Updated");
+                    }
+                    else {
+                        System.out.println("Technology NOT Updated");
+                    }
+                }
+                else {
+                    System.out.println("Invalid ID");
+                }
             }
 
             private void updateSmartWatch() {
-
+                technologyDeviceAPI.listAllSmartWatches();
+                String id = ScannerInput.readNextLine("The ID of smart watch you want to update is: ");
+                if(technologyDeviceAPI.isValidId(id)){
+                    SmartWatch smartWatchUpdate = newSmartWatch();
+                    if(technologyDeviceAPI.updateSmartWatch(id, smartWatchUpdate)){
+                        System.out.println("Technology Updated");
+                    }
+                    else {
+                        System.out.println("Technology NOT Updated");
+                    }
+                }
+                else {
+                    System.out.println("Invalid ID");
+                }
             }
 
             private void updateTablet() {
-
+                technologyDeviceAPI.listAllTablets();
+                String id = ScannerInput.readNextLine("The ID of tablet you want to update is: ");
+                if(technologyDeviceAPI.isValidId(id)){
+                    Tablet tabletUpdate = newTablet();
+                    if(technologyDeviceAPI.updateTablet(id, tabletUpdate)){
+                        System.out.println("Technology Updated");
+                    }
+                    else {
+                        System.out.println("Technology NOT Updated");
+                    }
+                }
+                else {
+                    System.out.println("Invalid ID");
+                }
             }
 
     private int reportsMenu() {
@@ -387,8 +435,8 @@ public class Driver {
         while (option != 0) {
             switch (option) {
                 case 1-> System.out.println(manufacturerAPI.listManufacturers());
-                case 2-> System.out.println("todo - Case 2");
-                case 3-> System.out.println("todo");
+                case 2-> System.out.println(getManufacturerByName());//?
+                case 3-> System.out.println(listManufacturerByName());//?
                 default->  System.out.println("Invalid option entered" + option);
             }
             ScannerInput.readNextLine("\n Press the enter key to continue");
@@ -396,6 +444,16 @@ public class Driver {
         }
         runMainMenu();
     }
+
+        private String listAllByManufacturer() {
+            String name = ScannerInput.readNextLine("Enter the name of manufacturer: ");
+            return manufacturerAPI.listAllByManufacturerName(name);
+        }
+
+        private String listManufacturerByName() {
+            String name = ScannerInput.readNextLine("Enter the name of manufacturer: ");
+            return manufacturerAPI.listAllByManufacturerName(name);
+        }
 
     private int techReportMenu() {
         System.out.println(""" 
@@ -456,7 +514,7 @@ public class Driver {
         return manufacturer;
     }
 
-    private Technology newSmartBand() {
+    private SmartBand newSmartBand() {
         String modelName = ScannerInput.readNextLine("Enter name: ");
         double price = ScannerInput.readNextDouble("Enter price: ");
         Manufacturer manufacturer = newManufacturer();
@@ -464,11 +522,11 @@ public class Driver {
         String material = ScannerInput.readNextLine("Enter material: ");
         String size = ScannerInput.readNextLine("Enter size: ");
         boolean heartRateMonitor = Utilities.YNtoBoolean(ScannerInput.readNextChar("Have heartRateMonitor? (y/n): "));
-        SmartBand smartBand = new SmartBand(modelName, price, manufacturer, id, material, size, heartRateMonitor);
+        SmartBand smartBand = new SmartBand(modelName, price, manufacturer, id, size, material, heartRateMonitor);
         return smartBand;
     }
 
-    private Technology newSmartWatch() {
+    private SmartWatch newSmartWatch() {
         String modelName = ScannerInput.readNextLine("Enter name: ");
         double price = ScannerInput.readNextDouble("Enter price: ");
         Manufacturer manufacturer = newManufacturer();
@@ -477,11 +535,11 @@ public class Driver {
         String material = ScannerInput.readNextLine("Enter material: ");
         String size = ScannerInput.readNextLine("Enter size: ");
         String displayType = ScannerInput.readNextLine("Enter displayType: ");
-        SmartWatch smartWatch = new SmartWatch(modelName, price, manufacturer, id, material, size, displayType);
+        SmartWatch smartWatch = new SmartWatch(modelName, price, manufacturer, id, size, material, displayType);
         return smartWatch;
     }
 
-    private Technology newTablet() {
+    private Tablet newTablet() {
         String modelName = ScannerInput.readNextLine("Enter name: ");
         double price = ScannerInput.readNextDouble("Enter price: ");
         Manufacturer manufacturer = newManufacturer();
@@ -510,6 +568,16 @@ public class Driver {
         String manufacturerName = ScannerInput.readNextLine("Please enter the manufacturer's name: ");
         if (manufacturerAPI.isValidManufacturer(manufacturerName)){
             return manufacturerAPI.getManufacturerByName(manufacturerName);
+        }
+        else{
+            return null;
+        }
+    }
+
+    private Technology getTechnologyById(){
+        String technologyId = ScannerInput.readNextLine("Please enter the ID of technology: ");
+        if (technologyDeviceAPI.isValidId(technologyId)){
+            return technologyDeviceAPI.getTechnologyDeviceById(technologyId);
         }
         else{
             return null;
