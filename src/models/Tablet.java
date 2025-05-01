@@ -4,8 +4,8 @@ import utils.OperatingSystemUtility;
 
 public class Tablet extends ComputingDevice {
     private String operatingSystem = "Window";
-    public Tablet(String id, double price, Manufacturer manufacturer, String modelName, String processor, int storage, String operatingSystem){
-        super(price, id, modelName, manufacturer, storage, processor);
+    public Tablet(String modelName, double price, Manufacturer manufacturer, String id, String processor, int storage, String operatingSystem){
+        super(modelName, price, manufacturer, id, storage, processor);
         setOperatingSystem(operatingSystem);
     }
 

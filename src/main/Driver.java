@@ -11,11 +11,8 @@ import java.io.File;
 
 public class Driver {
 
-
-
     private TechnologyDeviceAPI technologyDeviceAPI;
     private ManufacturerAPI manufacturerAPI;
-
 
     public static void main(String[] args) throws Exception {
             new Driver().start();
@@ -32,7 +29,7 @@ public class Driver {
 
     private int mainMenu() {
         System.out.println("""
-                         -------Technology Store-------------
+                         -------Technology Store---------
                         |  1) Manufacturer CRUD MENU     |
                         |  2) Technology  CRUD MENU      |
                         |  3) Reports MENU               |
@@ -80,7 +77,17 @@ public class Driver {
         }
 
         private void sortTechnologyDevices() {
-
+            System.out.println("""
+                --------Sort Technology Menu---------
+               |  1) By Ascending                    |
+               |  2) By Descending                   |
+                -------------------------------------""");
+            int option = ScannerInput.readNextInt("==>>");
+            switch (option) {
+                case 1 -> technologyDeviceAPI.sortByPriceAscending();
+                case 2 -> technologyDeviceAPI.sortByPriceDescending();
+                default ->  System.out.println("Invalid option entered" + option);
+            }
         }
 
         private void saveAll() throws Exception {
@@ -125,7 +132,7 @@ public class Driver {
                     case 3 -> updateManufacturer();
                     case 4 -> System.out.println(manufacturerAPI.listManufacturers());
                     case 5 -> findManufacturer();
-                    case 6 -> listByManufacturerName();
+//                    case 6 -> listByManufacturerName();
                     default -> System.out.println("Invalid option entered" + option);
                 }
                 ScannerInput.readNextLine("\n Press the enter key to continue");
@@ -179,11 +186,11 @@ public class Driver {
             }
         }
 
-        private void listByManufacturerName(){
-            String manufacturer = ScannerInput.readNextLine("Enter the manufacturer's name:  ");
-
-            System.out.println(manufacturerAPI.listAllByManufacturerName(manufacturer));
-        }
+//        private void listByManufacturerName(){
+//            String manufacturer = ScannerInput.readNextLine("Enter the manufacturer's name:  ");
+//
+//            System.out.println(manufacturerAPI.listAllByManufacturerName(manufacturer));
+//        }
 
 
         //---------------------
@@ -450,38 +457,39 @@ public class Driver {
     }
 
     private Technology newSmartBand() {
-        double price = ScannerInput.readNextDouble("Enter price: ");
-        String id = ScannerInput.readNextLine("Enter ID: ");
         String modelName = ScannerInput.readNextLine("Enter name: ");
+        double price = ScannerInput.readNextDouble("Enter price: ");
         Manufacturer manufacturer = newManufacturer();
+        String id = ScannerInput.readNextLine("Enter ID: ");
         String material = ScannerInput.readNextLine("Enter material: ");
         String size = ScannerInput.readNextLine("Enter size: ");
         boolean heartRateMonitor = Utilities.YNtoBoolean(ScannerInput.readNextChar("Have heartRateMonitor? (y/n): "));
-        SmartBand smartBand = new SmartBand(price, id, modelName, manufacturer, material, size, heartRateMonitor);
+        SmartBand smartBand = new SmartBand(modelName, price, manufacturer, id, material, size, heartRateMonitor);
         return smartBand;
     }
 
     private Technology newSmartWatch() {
-        double price = ScannerInput.readNextDouble("Enter price: ");
-        String id = ScannerInput.readNextLine("Enter ID: ");
         String modelName = ScannerInput.readNextLine("Enter name: ");
+        double price = ScannerInput.readNextDouble("Enter price: ");
         Manufacturer manufacturer = newManufacturer();
+        String id = ScannerInput.readNextLine("Enter ID: ");
+
         String material = ScannerInput.readNextLine("Enter material: ");
         String size = ScannerInput.readNextLine("Enter size: ");
         String displayType = ScannerInput.readNextLine("Enter displayType: ");
-        SmartWatch smartWatch = new SmartWatch(price, id, modelName, manufacturer, material, size, displayType);
+        SmartWatch smartWatch = new SmartWatch(modelName, price, manufacturer, id, material, size, displayType);
         return smartWatch;
     }
 
     private Technology newTablet() {
-        String id = ScannerInput.readNextLine("Enter ID: ");
+        String modelName = ScannerInput.readNextLine("Enter name: ");
         double price = ScannerInput.readNextDouble("Enter price: ");
         Manufacturer manufacturer = newManufacturer();
-        String modelName = ScannerInput.readNextLine("Enter name: ");
+        String id = ScannerInput.readNextLine("Enter ID: ");
         String processor = ScannerInput.readNextLine("Enter processor: ");
         int storage = ScannerInput.readNextInt("Enter storage: ");
         String operatingSystem = ScannerInput.readNextLine("Enter OS: ");
-        Tablet tablet = new Tablet(id, price, manufacturer, modelName, processor, storage, operatingSystem);
+        Tablet tablet = new Tablet(modelName, price, manufacturer, id, processor, storage, operatingSystem);
         return tablet;
     }
 

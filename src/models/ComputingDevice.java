@@ -2,11 +2,12 @@ package models;
 
 import utils.Utilities;
 
-public abstract class ComputingDevice extends Technology{
+public abstract class ComputingDevice extends Technology {
     private int storage;
     private String processor;
-    public ComputingDevice(double price, String id, String modelName, Manufacturer manufacturer,int storage,String processor){
-        super(price, id, modelName, manufacturer);
+
+    public ComputingDevice(String modelName, double price, Manufacturer manufacturer, String id, int storage, String processor) {
+        super(modelName, price, manufacturer, id);
         setStorage(storage);
         this.processor = processor;
     }
@@ -16,7 +17,7 @@ public abstract class ComputingDevice extends Technology{
     }
 
     public void setStorage(int storage) {
-        if(Utilities.validRange(storage,8,128)&& storage%8 == 0)
+        if (Utilities.validRange(storage, 8, 128) && storage % 8 == 0)
             this.storage = storage;
     }
 
@@ -25,11 +26,12 @@ public abstract class ComputingDevice extends Technology{
     }
 
     public void setProcessor(String processor) {
-        if(Utilities.validStringlength(processor,20))
+        if (Utilities.validStringlength(processor, 20))
             this.processor = processor;
     }
-   public String toString(){
-        return  super.toString() + "storage" + storage +"\n"
-                +"processor" + processor;
-   }
+
+    public String toString() {
+        return super.toString() + "storage" + storage + "\n"
+                + "processor" + processor;
+    }
 }

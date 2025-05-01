@@ -5,8 +5,8 @@ public abstract class WearableDevice extends Technology{
 
     private String material;
     private String size;
-    public WearableDevice(double price, String id, String modelName, Manufacturer manufacturer,String material,String size) {
-        super(price, id, modelName, manufacturer);
+    public WearableDevice(String modelName, double price, Manufacturer manufacturer, String id, String material, String size) {
+        super(modelName, price, manufacturer, id);
         this.material= Utilities.truncateString(material,20);
         this.size=Utilities.truncateString(size,10);
     }

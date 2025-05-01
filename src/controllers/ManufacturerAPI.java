@@ -12,7 +12,7 @@ import utils.ISerializer;
 
 import static utils.Utilities.isValidIndex;
 //todo include Manufacturer API into starter code
-public class ManufacturerAPI  implements ISerializer {
+public class ManufacturerAPI implements ISerializer {
 
     private List<Manufacturer> manufacturers = new ArrayList<>();
 
@@ -161,7 +161,7 @@ public class ManufacturerAPI  implements ISerializer {
         //list of classes that you wish to include in the serialisation, separated by a comma
         Class<?>[] classes = new Class[]{ Manufacturer.class};
 
-        //setting up the xstream object with default security and the above classes
+        //setting up the XStream object with default security and the above classes
         XStream xstream = new XStream(new DomDriver());
         XStream.setupDefaultSecurity(xstream);
         xstream.allowTypes(classes);

@@ -285,45 +285,33 @@ public class TechnologyDeviceAPI implements ISerializer {
     }
 
     //TODO - sort methods
-    public List<Technology> sortByPriceDescending() {
-//        List<Technology> priceDescendingTechnologyList = null;
-//        priceDescendingTechnologyList.addFirst(technologyList.getFirst());
-//        for(Technology technology : technologyList) {
-//            for (int index = 0; index < numberOfTechnologyDevices(); index++) {
-//                if(technology.getPrice() >= priceDescendingTechnologyList.get(index).getPrice()){
-//                    priceDescendingTechnologyList.add(index,technology);
-//                }
-//                else {
-//                    priceDescendingTechnologyList.add(index+1,technology);
-//                }
-//            }
-//        }
-//        return priceDescendingTechnologyList;
-//
-        int biggestIndex = 0;
-        double biggestPrice = technologyList.getFirst().getPrice();
-        for (int index = 0; index < numberOfTechnologyDevices(); index++) {
-            if((technologyList.get(index).getPrice() > biggestPrice)){
-                swapTechnology(technologyList, biggestIndex, index);
-                biggestPrice = technologyList.get(index).getPrice();
-                biggestIndex = index;
+    public void sortByPriceDescending() {
+        if(!technologyList.isEmpty()){
+            boolean swapOnRun = true;
+            while(swapOnRun) {
+                swapOnRun = false;
+                for(int index = 0; index < technologyList.size(); index++) {
+                    if(technologyList.get(index).getPrice() > technologyList.get(index + 1).getPrice()) {
+                        swapOnRun = true;
+                        swapTechnology(technologyList, index, index+1);
+                    }
+                }
             }
+            System.out.println("Finish");
         }
-        return technologyList;
+        else {
+            System.out.println("No technology in this list");
+        }
     }
 
-    public List<Technology> sortByPriceAscending() {
-//        int biggestIndex = 0;
-//        double biggestPrice = technologyList.getFirst().getPrice();
-//        for (int index = 0; index < numberOfTechnologyDevices(); index++) {
-//            if((technologyList.get(index).getPrice() < biggestPrice)){
-//                swapTechnology(technologyList, biggestIndex, index);
-//                biggestPrice = technologyList.get(index).getPrice();
-//                biggestIndex = index;
-//            }
-//        }
-//        return technologyList;
-        return sortByPriceDescending().reversed();
+    public void sortByPriceAscending() {
+        if(!technologyList.isEmpty()){
+            sortByPriceDescending();
+            technologyList.reversed();
+        }
+        else {
+            System.out.println("No technology in this list");
+        }
     }
 
     private void swapTechnology (List<Technology> technologyList, int i, int j) {
@@ -335,17 +323,19 @@ public class TechnologyDeviceAPI implements ISerializer {
 
     //TODO Top 5 methods
     public List<Technology> topFiveMostExpensiveTechnology() {
+        sortByPriceDescending();
         if(numberOfTechnologyDevices() >= 5) {
-            return sortByPriceDescending().subList(0, 5);
+            return technologyList.subList(0, 5);
         }
         else {
-            return sortByPriceDescending().subList(0, technologyList.size());
+            return technologyList.subList(0, technologyList.size());
         }
     }
 
     public List<Technology> topFiveMostExpensiveSmartWatch() {
         List<Technology> fiveMostExpSmartWatch = new ArrayList<>();
-        for(Technology technology : sortByPriceDescending()) {
+        sortByPriceDescending();
+        for(Technology technology : technologyList) {
             if(technology instanceof SmartWatch) {
                 fiveMostExpSmartWatch.add(technology);
                 if(fiveMostExpSmartWatch.size() == 5) {
@@ -358,7 +348,8 @@ public class TechnologyDeviceAPI implements ISerializer {
 
     public List<Technology> topFiveMostExpensiveTablet() {
         List<Technology> fiveMostExpTablet = new ArrayList<>();
-        for(Technology technology : sortByPriceDescending()) {
+        sortByPriceDescending();
+        for(Technology technology : technologyList) {
             if(technology instanceof SmartWatch) {
                 fiveMostExpTablet.add(technology);
                 if(fiveMostExpTablet.size() == 5) {
@@ -393,12 +384,12 @@ public class TechnologyDeviceAPI implements ISerializer {
         os.close();
     }
 
-
+    @SuppressWarnings("unchecked")
     public void load() throws Exception {
         //list of classes that you wish to include in the serialisation, separated by a comma
-        Class<?>[] classes = new Class[]{ Manufacturer.class};
+        Class<?>[] classes = new Class[]{ Technology.class};
 
-        //setting up the xstream object with default security and the above classes
+        //setting up the XStream object with default security and the above classes
         XStream xstream = new XStream(new DomDriver());
         XStream.setupDefaultSecurity(xstream);
         xstream.allowTypes(classes);

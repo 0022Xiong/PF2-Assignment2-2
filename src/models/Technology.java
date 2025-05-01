@@ -7,11 +7,11 @@ public abstract class Technology {
     private String id;
     private String modelName;
     private Manufacturer manufacturer;
-    public Technology(double price,String id,String modelName,Manufacturer manufacturer){
-        setPrice(price);
-        this.id = Utilities.truncateString(id,10);
+    public Technology(String modelName, double price, Manufacturer manufacturer, String id){
         this.modelName = modelName;
+        setPrice(price);
         this.manufacturer = manufacturer;
+        this.id = Utilities.truncateString(id,10);
     }
     public double getPrice() {
         return price;
@@ -19,7 +19,7 @@ public abstract class Technology {
 
     public void setPrice(double price) {
         if (price >= 20)
-        this.price = price;
+            this.price = price;
     }
 
     public String getId() {
@@ -28,7 +28,7 @@ public abstract class Technology {
 
     public void setId(String id) {
         if(Utilities.validStringlength(id,10))
-        this.id = id;
+            this.id = id;
     }
 
     public String getModelName() {

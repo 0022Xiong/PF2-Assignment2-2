@@ -39,6 +39,36 @@ class TechnologyDeviceAPITest {
     }
     @Nested
     class GettersAndSetters {
+        @Test
+        void getModelName() {
+            assertEquals("smart watch1", populatedDevices.getTechnologyByIndex(0).getModelName());
+            assertEquals("Smart Watch 12", populatedDevices.getTechnologyByIndex(1).getModelName());
+            assertEquals("IPad 123", populatedDevices.getTechnologyByIndex(2).getModelName());
+            assertEquals("HiTech Watch", populatedDevices.getTechnologyByIndex(3).getModelName());
+        }
+
+        @Test
+        void getPrice() {
+            assertEquals(129.99000549316406, populatedDevices.getTechnologyByIndex(0).getPrice());
+            assertEquals(459.0, populatedDevices.getTechnologyByIndex(1).getPrice());
+            assertEquals(678.0, populatedDevices.getTechnologyByIndex(2).getPrice());
+            assertEquals(67.0, populatedDevices.getTechnologyByIndex(3).getPrice());
+        }
+
+//        void getManufacturer() {
+//            assertEquals();
+//            assertEquals();
+//            assertEquals();
+//            assertEquals();
+//        }
+
+        @Test
+        void getID() {
+            assertEquals("A123", populatedDevices.getTechnologyByIndex(0).getId());
+            assertEquals("W1234", populatedDevices.getTechnologyByIndex(1).getId());
+            assertEquals("T1223", populatedDevices.getTechnologyByIndex(2).getId());
+            assertEquals("W3535", populatedDevices.getTechnologyByIndex(3).getId());
+        }
 
     }
 
