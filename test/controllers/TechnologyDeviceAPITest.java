@@ -226,8 +226,8 @@ class TechnologyDeviceAPITest {
             assertTrue(populatedDevices.updateTablet("T1223", updateTablet0));//normal
 
             Tablet updateTablet1 = new Tablet("ipad 10", 11.0, apple, "K123", "amd", 128, "iPad");
-            populatedDevices.updateTablet("K123", updateTablet1);//price below 20
-            assertNotEquals(11.0, populatedDevices.getTechnologyDeviceById("K123").getPrice());
+            populatedDevices.updateTablet("K123", updateTablet1);
+            assertNotEquals(11.0, populatedDevices.getTechnologyDeviceById("K123").getPrice());//price below 20
 
             Tablet updateTablet2 = new Tablet("ipad 10", 1112.0, apple, "12345678901", "amd", 128, "iPad");
             populatedDevices.updateTablet("K123", updateTablet2);
@@ -240,17 +240,91 @@ class TechnologyDeviceAPITest {
             Tablet updateTablet4 = new Tablet("ipad 10", 1112.0, apple, "K123", "amd", 128, "iPa");
             populatedDevices.updateTablet("K123", updateTablet4);
             assertNotEquals("iPa", ((Tablet)populatedDevices.getTechnologyDeviceById("K123")).getOperatingSystem());//OS invalid
+
+            Tablet updateTablet5 = new Tablet("1234567890123456789012345678901", 1112.0, apple, "K123", "amd", 128, "iPa");
+            populatedDevices.updateTablet("K123", updateTablet4);
+            assertNotEquals("1234567890123456789012345678901", populatedDevices.getTechnologyDeviceById("K123").getModelName());//name > 30
         }
 
-//        @Test
-//        void testUpdateSmartWatch() {
-//
-//        }
-//
-//        @Test
-//        void testUpdateSmartBand() {
-//
-//        }
+        @Test
+        void testUpdateSmartWatch() {
+            SmartWatch updateSmartWatch0 = new SmartWatch("watch0", 200.0, apple, "A114", "small", "alloy", "LCD");
+            assertTrue(populatedDevices.updateSmartWatch("W1234", updateSmartWatch0));//normal
+
+            SmartWatch updateSmartWatch1 = new SmartWatch("1234567890123456789012345678901", 200, apple, "A114", "small", "alloy", "LCD");
+            populatedDevices.updateSmartWatch("A114", updateSmartWatch1);
+            assertEquals("123456789012345678901234567890", populatedDevices.getTechnologyDeviceById("A114").getModelName());//name > 30
+
+            SmartWatch updateSmartWatch2 = new SmartWatch("watch0", 2.0, apple, "A114", "small", "alloy", "LCD");
+            populatedDevices.updateSmartWatch("A114", updateSmartWatch2);
+            assertEquals(20.0, populatedDevices.getTechnologyDeviceById("A114").getPrice());//price < 20
+
+            SmartWatch updateSmartWatch3 = new SmartWatch("watch0", 200.0, apple, "12345678901", "small", "alloy", "LCD");
+            populatedDevices.updateSmartWatch("A114", updateSmartWatch3);
+            assertEquals("1234567890", populatedDevices.getTechnologyDeviceById("1234567890").getId());//id > 10
+
+            SmartWatch updateSmartWatch4 = new SmartWatch("watch0", 200.0, apple, "A114", "12345678901", "alloy", "LCD");
+            populatedDevices.updateSmartWatch("1234567890", updateSmartWatch4);
+            assertEquals("1234567890", ((SmartWatch)populatedDevices.getTechnologyDeviceById("A114")).getSize());//size > 10
+
+            SmartWatch updateSmartWatch5 = new SmartWatch("watch0", 200.0, apple, "A114", "small", "123456789012345678901", "LCD");
+            populatedDevices.updateSmartWatch("A114", updateSmartWatch5);
+            assertEquals("12345678901234567890", ((SmartWatch)populatedDevices.getTechnologyDeviceById("A114")).getMaterial());//material > 20
+
+            SmartWatch updateSmartWatch6 = new SmartWatch("watch0", 2.0, apple, "A114", "small", "alloy", "LC");
+            populatedDevices.updateSmartWatch("A114", updateSmartWatch1);
+            assertEquals("LCD", ((SmartWatch)populatedDevices.getTechnologyDeviceById("A114")).getDisplayType());//invalid display
+        }
+
+        @Test
+        void testUpdateSmartBand() {
+            SmartBand updateSmartBand0 = new SmartBand("band0", 100.0, apple, "Q11", "small", "alloy", false);
+            assertTrue(populatedDevices.updateSmartBand("A123", updateSmartBand0));
+
+            SmartBand smartBand1 = new SmartBand("1234567890123456789012345678901", 100.0, apple, "Q11", "small", "alloy", false);
+            populatedDevices.updateSmartBand("Q11", smartBand1);
+            assertEquals("123456789012345678901234567890", populatedDevices.getTechnologyDeviceById("Q11").getModelName());
+
+            SmartBand smartBand2 = new SmartBand("band0", 10.0, apple, "Q11", "small", "alloy", false);
+            populatedDevices.updateSmartBand("Q11", smartBand2);
+            assertEquals(20, populatedDevices.getTechnologyDeviceById("Q11").getPrice());
+
+            SmartBand smartBand3 = new SmartBand("band0", 100.0, apple, "12345678901", "small", "alloy", false);
+            populatedDevices.updateSmartBand("Q11", smartBand3);
+            assertEquals("1234567890", populatedDevices.getTechnologyDeviceById("1234567890").getId());
+
+            SmartBand smartBand4 = new SmartBand("band0", 100.0, apple, "Q11", "12345678901", "alloy", false);
+            populatedDevices.updateSmartBand("1234567890", smartBand4);
+            assertEquals("1234567890", ((SmartBand)populatedDevices.getTechnologyDeviceById("Q11")).getSize());
+
+            SmartBand smartBand5 = new SmartBand("band0", 100.0, apple, "Q11", "small", "123456789012345678901", false);
+            populatedDevices.updateSmartBand("Q11", smartBand5);
+            assertEquals("12345678901234567890", ((SmartBand)populatedDevices.getTechnologyDeviceById("Q11")).getMaterial());
+
+            SmartBand smartBand6 = new SmartBand("band0", 100.0, apple, "Q11", "small", "alloy", true);
+            populatedDevices.updateSmartBand("Q11", smartBand6);
+            assertTrue(((SmartBand) populatedDevices.getTechnologyDeviceById("Q11")).isHeartRateMonitor());
+        }
+
+        @Test
+        void deleteByIndex() {
+            assertNull(emptyDevices.deleteTechnologyByIndex(0));//empty
+
+            assertEquals("A123", populatedDevices.getTechnologyByIndex(0).getId());//noEmpty
+
+            populatedDevices.deleteTechnologyByIndex(0);
+            assertEquals("W1234", populatedDevices.getTechnologyByIndex(0).getId());
+        }
+
+        @Test
+        void deleteById() {
+            assertNull(emptyDevices.deleteTechnologyById("123"));
+
+            assertEquals("A123", populatedDevices.getTechnologyDeviceById("A123").getId());
+
+            populatedDevices.deleteTechnologyById("A123");
+            assertNull(populatedDevices.getTechnologyDeviceById("A123"));
+        }
 
     }
 
