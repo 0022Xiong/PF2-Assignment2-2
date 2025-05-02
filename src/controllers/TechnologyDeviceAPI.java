@@ -299,21 +299,21 @@ public class TechnologyDeviceAPI implements ISerializer {
                     }
                 }
             }
-            System.out.println("Finish");
+//            System.out.println("Finish");
         }
-        else {
-            System.out.println("No technology in this list");
-        }
+//        else {
+//            System.out.println("No technology in this list");
+//        }
     }
 
     public void sortByPriceAscending() {
         if(!technologyList.isEmpty()){
             sortByPriceDescending();
-            technologyList.reversed();
+            this.technologyList = technologyList.reversed();
         }
-        else {
-            System.out.println("No technology in this list");
-        }
+//        else {
+//            System.out.println("No technology in this list");
+//        }
     }
 
     private void swapTechnology (List<Technology> technologyList, int i, int j) {

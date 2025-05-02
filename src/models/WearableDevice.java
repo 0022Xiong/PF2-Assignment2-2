@@ -17,7 +17,7 @@ public abstract class WearableDevice extends Technology{
 
     public void setMaterial(String material) {
         if(Utilities.validStringlength(material,20))
-        this.material = material;
+            this.material = material;
     }
 
     public String getSize() {
@@ -26,7 +26,7 @@ public abstract class WearableDevice extends Technology{
 
     public void setSize(String size) {
         if(Utilities.validStringlength(size,10))
-        this.size = size;
+            this.size = size;
     }
     public abstract double getInsurancePremium();
     public abstract String connectToInternet();

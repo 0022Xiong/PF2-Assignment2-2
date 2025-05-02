@@ -404,7 +404,6 @@ public class Driver {
                     System.out.println("Invalid ID");
                 }
             }
-            //Bug: ID must be updated
 
     private int reportsMenu() {
         System.out.println(""" 
@@ -525,8 +524,8 @@ public class Driver {
         String modelName = ScannerInput.readNextLine("Enter name: ");
         double price = ScannerInput.readNextDouble("Enter price: ");
         Manufacturer manufacturer = newManufacturer();
-//        String id = ScannerInput.readNextLine("Enter ID: ");
-        String id = verifyId();
+        String id = ScannerInput.readNextLine("Enter ID: ");
+//        String id = verifyId();
         String material = ScannerInput.readNextLine("Enter material: ");
         String size = ScannerInput.readNextLine("Enter size: ");
         boolean heartRateMonitor = Utilities.YNtoBoolean(ScannerInput.readNextChar("Have heartRateMonitor? (y/n): "));
@@ -538,8 +537,8 @@ public class Driver {
         String modelName = ScannerInput.readNextLine("Enter name: ");
         double price = ScannerInput.readNextDouble("Enter price: ");
         Manufacturer manufacturer = newManufacturer();
-//        String id = ScannerInput.readNextLine("Enter ID: ");
-        String id = verifyId();
+        String id = ScannerInput.readNextLine("Enter ID: ");
+//        String id = verifyId();
         String material = ScannerInput.readNextLine("Enter material: ");
         String size = ScannerInput.readNextLine("Enter size: ");
         String displayType = ScannerInput.readNextLine("Enter displayType: ");
@@ -551,8 +550,8 @@ public class Driver {
         String modelName = ScannerInput.readNextLine("Enter name: ");
         double price = ScannerInput.readNextDouble("Enter price: ");
         Manufacturer manufacturer = chooseManufacturer();
-//        String id = ScannerInput.readNextLine("Enter ID: ");
-        String id = verifyId();
+        String id = ScannerInput.readNextLine("Enter ID: ");
+//        String id = verifyId();
         String processor = ScannerInput.readNextLine("Enter processor: ");
         int storage = ScannerInput.readNextInt("Enter storage: ");
         String operatingSystem = ScannerInput.readNextLine("Enter OS: ");
@@ -569,14 +568,14 @@ public class Driver {
         return manufacturerAPI.getManufacturerByIndex(index);
     }
 
-    private String verifyId() {
-        String id = ScannerInput.readNextLine("Enter ID: ");
-        while (technologyDeviceAPI.isValidId(id)){
-            System.out.println("The ID is already existed");
-            id = ScannerInput.readNextLine("Enter ID: ");
-        }
-        return id;
-    }
+//    private String verifyId() {
+//        String id = ScannerInput.readNextLine("Enter ID: ");
+//        while (technologyDeviceAPI.isValidId(id)){
+//            System.out.println("The ID is already existed");
+//            id = ScannerInput.readNextLine("Enter ID: ");
+//        }
+//        return id;
+//    }
 
         //---------------------
         //  General Menu Items
