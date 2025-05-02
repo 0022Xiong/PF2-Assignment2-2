@@ -148,7 +148,6 @@ public class Driver {
                     case 3 -> updateManufacturer();
                     case 4 -> System.out.println(manufacturerAPI.listManufacturers());
                     case 5 -> findManufacturer();
-//                    case 6 -> listByManufacturerName();
                     default -> System.out.println("Invalid option entered" + option);
                 }
                 ScannerInput.readNextLine("\n Press the enter key to continue");
@@ -255,33 +254,45 @@ public class Driver {
         }
 
             private void addSmartBand() {
-                SmartBand smartBand = newSmartBand();
-                if (technologyDeviceAPI.addTechnologyDevice(smartBand)){
-                    System.out.println("Add successful");
+                if(!manufacturerAPI.getManufacturers().isEmpty()){
+                    SmartBand smartBand = newSmartBand();
+                    if (technologyDeviceAPI.addTechnologyDevice(smartBand)){
+                        System.out.println("Add successful");
+                    }
+                    else{
+                        System.out.println("Add not successful");
+                    }
                 }
-                else{
-                    System.out.println("Add not successful");
-                }
+                else
+                    System.out.println("No manufacturer in the list, unable to add");
             }
 
             private void addSmartWatch() {
-                SmartWatch smartWatch = newSmartWatch();
-                if (technologyDeviceAPI.addTechnologyDevice(smartWatch)){
-                    System.out.println("Add successful");
+                if(!manufacturerAPI.getManufacturers().isEmpty()){
+                    SmartWatch smartWatch = newSmartWatch();
+                    if (technologyDeviceAPI.addTechnologyDevice(smartWatch)){
+                        System.out.println("Add successful");
+                    }
+                    else{
+                        System.out.println("Add not successful");
+                    }
                 }
-                else{
-                    System.out.println("Add not successful");
-                }
+                else
+                    System.out.println("No manufacturer in the list, unable to add");
             }
 
             private void addTablet() {
-                Tablet tablet = newTablet();
-                if (technologyDeviceAPI.addTechnologyDevice(tablet)){
-                    System.out.println("Add successful");
+                if(!manufacturerAPI.getManufacturers().isEmpty()){
+                    Tablet tablet = newTablet();
+                    if (technologyDeviceAPI.addTechnologyDevice(tablet)){
+                        System.out.println("Add successful");
+                    }
+                    else{
+                        System.out.println("Add not successful");
+                    }
                 }
-                else{
-                    System.out.println("Add not successful");
-                }
+                else
+                    System.out.println("No manufacturer in the list, unable to add");
             }
 
         private void deleteTechDevice() throws Exception {
@@ -393,6 +404,7 @@ public class Driver {
                     System.out.println("Invalid ID");
                 }
             }
+            //Bug: ID must be updated
 
     private int reportsMenu() {
         System.out.println(""" 
@@ -435,8 +447,8 @@ public class Driver {
         while (option != 0) {
             switch (option) {
                 case 1-> System.out.println(manufacturerAPI.listManufacturers());
-                case 2-> System.out.println(getManufacturerByName());//?
-                case 3-> System.out.println(listManufacturerByName());//?
+                case 2-> System.out.println(listManufacturerByName());//?
+                case 3-> System.out.println(getManufacturerByName());//?
                 default->  System.out.println("Invalid option entered" + option);
             }
             ScannerInput.readNextLine("\n Press the enter key to continue");
@@ -444,11 +456,6 @@ public class Driver {
         }
         runMainMenu();
     }
-
-        private String listAllByManufacturer() {
-            String name = ScannerInput.readNextLine("Enter the name of manufacturer: ");
-            return manufacturerAPI.listAllByManufacturerName(name);
-        }
 
         private String listManufacturerByName() {
             String name = ScannerInput.readNextLine("Enter the name of manufacturer: ");
@@ -518,7 +525,8 @@ public class Driver {
         String modelName = ScannerInput.readNextLine("Enter name: ");
         double price = ScannerInput.readNextDouble("Enter price: ");
         Manufacturer manufacturer = newManufacturer();
-        String id = ScannerInput.readNextLine("Enter ID: ");
+//        String id = ScannerInput.readNextLine("Enter ID: ");
+        String id = verifyId();
         String material = ScannerInput.readNextLine("Enter material: ");
         String size = ScannerInput.readNextLine("Enter size: ");
         boolean heartRateMonitor = Utilities.YNtoBoolean(ScannerInput.readNextChar("Have heartRateMonitor? (y/n): "));
@@ -530,8 +538,8 @@ public class Driver {
         String modelName = ScannerInput.readNextLine("Enter name: ");
         double price = ScannerInput.readNextDouble("Enter price: ");
         Manufacturer manufacturer = newManufacturer();
-        String id = ScannerInput.readNextLine("Enter ID: ");
-
+//        String id = ScannerInput.readNextLine("Enter ID: ");
+        String id = verifyId();
         String material = ScannerInput.readNextLine("Enter material: ");
         String size = ScannerInput.readNextLine("Enter size: ");
         String displayType = ScannerInput.readNextLine("Enter displayType: ");
@@ -542,13 +550,32 @@ public class Driver {
     private Tablet newTablet() {
         String modelName = ScannerInput.readNextLine("Enter name: ");
         double price = ScannerInput.readNextDouble("Enter price: ");
-        Manufacturer manufacturer = newManufacturer();
-        String id = ScannerInput.readNextLine("Enter ID: ");
+        Manufacturer manufacturer = chooseManufacturer();
+//        String id = ScannerInput.readNextLine("Enter ID: ");
+        String id = verifyId();
         String processor = ScannerInput.readNextLine("Enter processor: ");
         int storage = ScannerInput.readNextInt("Enter storage: ");
         String operatingSystem = ScannerInput.readNextLine("Enter OS: ");
         Tablet tablet = new Tablet(modelName, price, manufacturer, id, processor, storage, operatingSystem);
         return tablet;
+    }
+
+    private Manufacturer chooseManufacturer() {
+        int index = ScannerInput.readNextInt("Choose the manufacturer by index: ");
+        while(!Utilities.isValidIndex(manufacturerAPI.getManufacturers(), index)){
+            System.out.println("Invalid index");
+            index = ScannerInput.readNextInt("Choose the manufacturer by index: ");
+        }
+        return manufacturerAPI.getManufacturerByIndex(index);
+    }
+
+    private String verifyId() {
+        String id = ScannerInput.readNextLine("Enter ID: ");
+        while (technologyDeviceAPI.isValidId(id)){
+            System.out.println("The ID is already existed");
+            id = ScannerInput.readNextLine("Enter ID: ");
+        }
+        return id;
     }
 
         //---------------------

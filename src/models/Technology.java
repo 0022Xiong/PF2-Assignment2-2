@@ -4,7 +4,7 @@ import utils.Utilities;
 
 public abstract class Technology {
     private double price;
-    private String id;
+    private String id = "unknown";
     private String modelName;
     private Manufacturer manufacturer;
     public Technology(String modelName, double price, Manufacturer manufacturer, String id){

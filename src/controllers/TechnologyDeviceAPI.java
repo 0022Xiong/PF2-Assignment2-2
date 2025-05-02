@@ -35,7 +35,6 @@ public class TechnologyDeviceAPI implements ISerializer {
     }
 
     public boolean updateTablet(String id, Tablet updatedDetails) {
-//        if(isValidId(id)){
             int indexUpdate = -1;
             for(Technology technology : technologyList) {
                 if(technology instanceof Tablet && technology.getId().equals(id)) {
@@ -46,12 +45,10 @@ public class TechnologyDeviceAPI implements ISerializer {
                 technologyList.set(indexUpdate, updatedDetails);
                 return true;
             }
-//        }
         return false;
     }
 
     public boolean updateSmartWatch(String id, SmartWatch updatedDetails) {
-//        if(isValidId(id)){
             int indexUpdate = -1;
             for(Technology technology : technologyList) {
                 if(technology instanceof SmartWatch && technology.getId().equals(id)) {
@@ -62,12 +59,10 @@ public class TechnologyDeviceAPI implements ISerializer {
                 technologyList.set(indexUpdate, updatedDetails);
                 return true;
             }
-//        }
         return false;
     }
 
     public boolean updateSmartBand(String id, SmartBand updatedDetails) {
-//        if(isValidId(id)){
             int indexUpdate = -1;
             for(Technology technology : technologyList) {
                 if(technology instanceof SmartBand && technology.getId().equals(id)) {
@@ -78,7 +73,6 @@ public class TechnologyDeviceAPI implements ISerializer {
                 technologyList.set(indexUpdate, updatedDetails);
                 return true;
             }
-//        }
         return false;
     }
 

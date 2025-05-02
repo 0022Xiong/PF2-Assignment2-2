@@ -31,7 +31,7 @@ public abstract class ComputingDevice extends Technology {
     }
 
     public String toString() {
-        return super.toString() + "storage" + storage + "\n"
-                + "processor" + processor;
+        return super.toString() + "\n" + "Storage: " + storage + "\n"
+                + "Processor: " + processor;
     }
 }

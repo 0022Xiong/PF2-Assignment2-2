@@ -220,7 +220,38 @@ class TechnologyDeviceAPITest {
         }
         //getters are tested above
 
-        void updateTablet
+        @Test
+        void testUpdateTablet() {
+            Tablet updateTablet0 = new Tablet("ipad 10", 1112.0, apple, "K123", "amd", 128, "iPad");
+            assertTrue(populatedDevices.updateTablet("T1223", updateTablet0));//normal
+
+            Tablet updateTablet1 = new Tablet("ipad 10", 11.0, apple, "K123", "amd", 128, "iPad");
+            populatedDevices.updateTablet("K123", updateTablet1);//price below 20
+            assertNotEquals(11.0, populatedDevices.getTechnologyDeviceById("K123").getPrice());
+
+            Tablet updateTablet2 = new Tablet("ipad 10", 1112.0, apple, "12345678901", "amd", 128, "iPad");
+            populatedDevices.updateTablet("K123", updateTablet2);
+            assertNotEquals("12345678901", populatedDevices.getTechnologyDeviceById("1234567890").getId());//id > 10
+
+            Tablet updateTablet3 = new Tablet("ipad 10", 1112.0, apple, "K123", "amd", 127, "iPad");
+            populatedDevices.updateTablet("1234567890", updateTablet3);
+            assertNotEquals(127, ((Tablet)populatedDevices.getTechnologyDeviceById("K123")).getStorage());//Storage invalid
+
+            Tablet updateTablet4 = new Tablet("ipad 10", 1112.0, apple, "K123", "amd", 128, "iPa");
+            populatedDevices.updateTablet("K123", updateTablet4);
+            assertNotEquals("iPa", ((Tablet)populatedDevices.getTechnologyDeviceById("K123")).getOperatingSystem());//OS invalid
+        }
+
+//        @Test
+//        void testUpdateSmartWatch() {
+//
+//        }
+//
+//        @Test
+//        void testUpdateSmartBand() {
+//
+//        }
+
     }
 
     @Nested

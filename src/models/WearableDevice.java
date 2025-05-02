@@ -31,7 +31,7 @@ public abstract class WearableDevice extends Technology{
     public abstract double getInsurancePremium();
     public abstract String connectToInternet();
     public String toString(){
-        return super.toString() + "material" + material + "\n" +
-                "size" + size;
+        return super.toString() + "\n" + "Material: " + material + "\n" +
+                "Size: " + size;
     }
 }

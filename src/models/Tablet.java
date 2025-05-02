@@ -21,7 +21,7 @@ public class Tablet extends ComputingDevice {
         return "Connects to the internet via Wi-Fi";
     }
     public String toString(){
-        return super.toString() + "operatingSystem" + operatingSystem;
+        return super.toString() + "\n" + "OperatingSystem: " + operatingSystem;
     }
     public double getInsurancePremium() {
         return getPrice() * 0.01;
