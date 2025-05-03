@@ -23,7 +23,7 @@ public class SmartWatch extends WearableDevice{
         return "Connects to the internet via Companion App";
     }
     public String toString(){
-        return super.toString() + "\n" + "DisplayType: " + displayType;
+        return super.toString() + ", " + "DisplayType: " + displayType + ", " + "Insurance Premium: €" + getInsurancePremium();
     }
     public double getInsurancePremium() {
         return getPrice() * 0.06;

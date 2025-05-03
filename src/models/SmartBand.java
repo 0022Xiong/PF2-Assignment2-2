@@ -1,5 +1,7 @@
 package models;
 
+import utils.Utilities;
+
 public class SmartBand extends WearableDevice{
     private boolean heartRateMonitor ;
     public SmartBand (String modelName, double price, Manufacturer manufacturer, String id, String size, String material, boolean heartRateMonitor){
@@ -21,6 +23,7 @@ public class SmartBand extends WearableDevice{
         return "Connects to the internet via bluetooth";
     }
     public String toString(){
-        return super.toString() + "\n" + "HeartRateMonitor: " + heartRateMonitor;
+        return super.toString() + ", " + "HeartRateMonitor: " + Utilities.booleanToYN(heartRateMonitor);
+//        return super.toString() + ", " + "HeartRateMonitor: " + Utilities.booleanToYN(heartRateMonitor) + connectToInternet();
     }
 }
