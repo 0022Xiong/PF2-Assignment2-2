@@ -29,8 +29,6 @@ public abstract class Technology {
     public void setId(String id) {
         if(Utilities.validStringlength(id,10))
             this.id = id;
-//        else
-//            this.id = Utilities.truncateString(id, 10);
     }
 
     public String getModelName() {
@@ -40,8 +38,6 @@ public abstract class Technology {
     public void setModelName(String modelName) {
         if(Utilities.validStringlength(modelName, 30))
             this.modelName = modelName;
-//        else
-//            this.modelName = Utilities.truncateString(modelName, 30);
     }
 
     public Manufacturer getManufacturer() {

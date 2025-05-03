@@ -19,11 +19,10 @@ public class Driver {
         }
 
         public void start() throws Exception {
-            //TODO - construct fields
+
             manufacturerAPI = new ManufacturerAPI(new File("manufacturers.xml"));
             technologyDeviceAPI = new TechnologyDeviceAPI(new File("technologyDevices.xml"));
 
-            //TODO - load all data once the serializers are set up
             runMainMenu();
         }
 
@@ -45,8 +44,7 @@ public class Driver {
                          --------------------------------""");
         return ScannerInput.readNextInt("==>> ");
     }
-    //// search todo by different criteria i.e. look at the list methods and give options based on that.
-// sort todo (and give a list of options - not a recurring menu thou)
+
         private void runMainMenu() throws Exception {
             int option = mainMenu();
             while (option != 0) {

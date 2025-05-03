@@ -2,11 +2,11 @@ package controllers;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-import models.*;
 
 import utils.ISerializer;
 import utils.OperatingSystemUtility;
 
+import models.*;
 import utils.Utilities;
 
 import java.io.*;
@@ -19,8 +19,6 @@ public class TechnologyDeviceAPI implements ISerializer {
     //TODO - create 2 fields
     private File file;
     private List<Technology> technologyList = new ArrayList<>();
-
-    //TODO - create constructor
 
     public TechnologyDeviceAPI(File file) {
         this.file = file;
