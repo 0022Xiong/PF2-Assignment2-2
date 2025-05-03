@@ -195,6 +195,71 @@ class TechnologyDeviceAPITest {
     }
 
     @Nested
+    class Numbers {
+        @Test
+        void numberOfTechnology() {
+            assertEquals(4, populatedDevices.numberOfTechnologyDevices());
+            populatedDevices.deleteTechnologyByIndex(1);
+            assertEquals(3, populatedDevices.numberOfTechnologyDevices());
+
+            assertEquals(0, emptyDevices.numberOfTechnologyDevices());
+            Tablet newTab = new Tablet("Galaxy Tab S7", 799.99, tesla, "123456", "Snapdragon 865", 64, "Android");
+            emptyDevices.addTechnologyDevice(newTab);
+            assertEquals(1, emptyDevices.numberOfTechnologyDevices());
+
+        }
+
+        @Test
+        void numberOfSmartBand() {
+            assertEquals(1, populatedDevices.numberOfSmartBands());
+            populatedDevices.deleteTechnologyByIndex(0);
+            assertEquals(0, populatedDevices.numberOfSmartBands());
+
+            assertEquals(0, emptyDevices.numberOfSmartBands());
+            SmartBand smartBand0 = new SmartBand("band0", 100.0, apple, "Q11", "small", "alloy", false);
+            emptyDevices.addTechnologyDevice(smartBand0);
+            assertEquals(1, emptyDevices.numberOfSmartBands());
+        }
+
+        @Test
+        void numberOfSmartWatch() {
+            assertEquals(2, populatedDevices.numberOfSmartWatch());
+            populatedDevices.deleteTechnologyByIndex(1);
+            assertEquals(1, populatedDevices.numberOfSmartWatch());
+
+            assertEquals(0, emptyDevices.numberOfSmartWatch());
+            SmartWatch smartWatch0 = new SmartWatch("watch0", 200.0, apple, "A114", "small", "alloy", "LCD");
+            emptyDevices.addTechnologyDevice(smartWatch0);
+            assertEquals(1, emptyDevices.numberOfSmartWatch());
+        }
+
+        @Test
+        void numberOfTablet() {
+            assertEquals(1, populatedDevices.numberOfTablet());
+            populatedDevices.deleteTechnologyByIndex(2);
+            assertEquals(0, populatedDevices.numberOfTablet());
+
+            assertEquals(0, emptyDevices.numberOfTablet());
+            Tablet tablet0 = new Tablet("ipad 10", 1112.0, apple, "K123", "amd", 128, "iPad");
+            emptyDevices.addTechnologyDevice(tablet0);
+            assertEquals(1, emptyDevices.numberOfTablet());
+        }
+
+        @Test
+        void numberOfManufacturer() {
+            assertEquals(4, populatedDevices.numberOfTechnologyByChosenManufacturer(samsung));
+            assertEquals(0, populatedDevices.numberOfTechnologyByChosenManufacturer(apple));
+
+            Tablet tablet0 = new Tablet("ipad 10", 1112.0, apple, "K123", "amd", 128, "iPad");
+            populatedDevices.addTechnologyDevice(tablet0);
+            assertEquals(1, populatedDevices.numberOfTechnologyByChosenManufacturer(apple));
+
+            populatedDevices.deleteTechnologyByIndex(1);
+            assertEquals(3, populatedDevices.numberOfTechnologyByChosenManufacturer(samsung));
+        }
+    }
+
+    @Nested
     class CRUDMethods {
         @Test
         void addNewTechnologyDevicetoEmpty() {
@@ -348,29 +413,196 @@ class TechnologyDeviceAPITest {
             assertTrue(populatedDeviceStr.contains("ID: T1223"));
             assertTrue(populatedDeviceStr.contains("ID: W3535"));
 
-          
         }
+
+        @Test
+        void listSmartBands() {
+            assertEquals(1, populatedDevices.numberOfSmartBands());
+            String populatedDeviceStr = populatedDevices.listAllSmartBands();
+
+            assertTrue(populatedDeviceStr.contains("ID: A123"));
+
+            populatedDevices.deleteTechnologyById("A123");
+            String populateDeviceStr2 = populatedDevices.listAllSmartBands();
+
+            assertTrue(populateDeviceStr2.contains("No Smart Bands"));
+        }
+
+        @Test
+        void listSmartWatch() {
+            assertEquals(2, populatedDevices.numberOfSmartWatch());
+            String populatedDeviceStr = populatedDevices.listAllSmartWatches();
+
+            assertTrue(populatedDeviceStr.contains("ID: W1234"));
+            assertTrue(populatedDeviceStr.contains("ID: W3535"));
+
+            populatedDevices.deleteTechnologyById("W1234");
+            populatedDevices.deleteTechnologyById("W3535");
+            String populateDeviceStr2 = populatedDevices.listAllSmartWatches();
+
+            assertTrue(populateDeviceStr2.contains("No Smart Watches"));
+        }
+
+        @Test
+        void listTablet() {
+            assertEquals(1, populatedDevices.numberOfTablet());
+            String populatedDeviceStr = populatedDevices.listAllTablets();
+
+            assertTrue(populatedDeviceStr.contains("ID: T1223"));
+
+            populatedDevices.deleteTechnologyById("T1223");
+            String populateDeviceStr2 = populatedDevices.listAllTablets();
+
+            assertTrue(populateDeviceStr2.contains("No Tablets"));
+        }
+
+        @Test
+        void listAllByGivenManufacturer() {
+            assertEquals(4, populatedDevices.numberOfTechnologyDevices());
+            String populatedDeviceStr = populatedDevices.listAllTechDevicesByChosenManufacturer(samsung);
+            //checks for objects in the string
+
+            assertTrue(populatedDeviceStr.contains("ID: A123"));
+            assertTrue(populatedDeviceStr.contains("ID: W1234"));
+            assertTrue(populatedDeviceStr.contains("ID: T1223"));
+            assertTrue(populatedDeviceStr.contains("ID: W3535"));
+            //valid
+
+            String populatedDeviceStr2 = populatedDevices.listAllTechDevicesByChosenManufacturer(apple);
+            assertTrue(populatedDeviceStr2.contains("No technology manufactured by"));
+            //invalid
+
+        }
+
+        @Test
+        void listTabletsByOS() {
+            assertEquals(1, populatedDevices.numberOfTablet());
+            String populatedDeviceStr = populatedDevices.listAllTabletsByOperatingSystem("Android");
+
+            assertTrue(populatedDeviceStr.contains("ID: T1223"));
+            //valid
+
+            String populatedDeviceStr2 = populatedDevices.listAllTabletsByOperatingSystem("iPad");
+            assertTrue(populatedDeviceStr2.contains("No tablet with the operating system"));
+            //invalid
+        }
+
 
         @Test
         void listBySelectedYearReturnsNoTechnologyDevicesWhenNoneExistForEnteredPrice() {
             assertEquals(4, populatedDevices.numberOfTechnologyDevices());
             String populatedDeviceStr = populatedDevices.listAllTechnologyAbovePrice(10000.99);
             assertTrue(populatedDeviceStr.contains("No technology more expensive than"));
+
+            String populatedDeviceStr2 = populatedDevices.listAllTechnologyBelowPrice(30.0);
+            assertTrue(populatedDeviceStr2.contains("No technology cheaper than"));
         }
 
+        @Test
+        void listTopFiveMostExpensiveTechnologyButBelowFive() {
+            assertEquals(4, populatedDevices.numberOfTechnologyDevices());
+
+            assertEquals("T1223",populatedDevices.topFiveMostExpensiveTechnology().get(0).getId());
+            assertEquals("W1234",populatedDevices.topFiveMostExpensiveTechnology().get(1).getId());
+            assertEquals("A123",populatedDevices.topFiveMostExpensiveTechnology().get(2).getId());
+            assertEquals("W3535",populatedDevices.topFiveMostExpensiveTechnology().get(3).getId());
+
+        }
+
+        @Test
+        void listTopFiveMostExpensiveTechnology() {
+            Tablet tablet0 = new Tablet("iPad 4", 33.0, apple, "T11", "Android", 256, "iPad");
+            populatedDevices.addTechnologyDevice(tablet0);
+            SmartWatch smartWatch0 = new SmartWatch("SmartWatch", 22.0, apple, "W20", "large", "plastic", "LCD");
+            populatedDevices.addTechnologyDevice(smartWatch0);
+
+            assertEquals(6, populatedDevices.numberOfTechnologyDevices());
+
+            assertEquals("T1223",populatedDevices.topFiveMostExpensiveTechnology().get(0).getId());
+            assertEquals("W1234",populatedDevices.topFiveMostExpensiveTechnology().get(1).getId());
+            assertEquals("A123",populatedDevices.topFiveMostExpensiveTechnology().get(2).getId());
+            assertEquals("W3535",populatedDevices.topFiveMostExpensiveTechnology().get(3).getId());
+            assertEquals("T11",populatedDevices.topFiveMostExpensiveTechnology().get(4).getId());
+        }
+
+        @Test
+        void listTopFiveMostExpensiveSmartWatchButBelowFive() {
+            assertEquals(2, populatedDevices.numberOfSmartWatch());
+
+            assertEquals("W1234",populatedDevices.topFiveMostExpensiveSmartWatch().get(0).getId());
+            assertEquals("W3535",populatedDevices.topFiveMostExpensiveSmartWatch().get(1).getId());
+        }
+
+        @Test
+        void listTopFiveMostExpensiveSmartWatch() {
+            SmartWatch smartWatch0 = new SmartWatch("SmartWatch0", 460.0, apple, "W20", "large", "plastic", "LCD");
+            populatedDevices.addTechnologyDevice(smartWatch0);
+            SmartWatch smartWatch1 = new SmartWatch("SmartWatch1", 463.0, apple, "W201", "large", "plastic", "LCD");
+            populatedDevices.addTechnologyDevice(smartWatch1);
+            SmartWatch smartWatch2 = new SmartWatch("SmartWatch2", 440.0, apple, "W202", "large", "plastic", "LCD");
+            populatedDevices.addTechnologyDevice(smartWatch2);
+            SmartWatch smartWatch3 = new SmartWatch("SmartWatch3", 44.0, apple, "W203", "large", "plastic", "LCD");
+            populatedDevices.addTechnologyDevice(smartWatch3);
+
+            assertEquals(6, populatedDevices.numberOfSmartWatch());
+
+            assertEquals("W201",populatedDevices.topFiveMostExpensiveSmartWatch().get(0).getId());
+            assertEquals("W20",populatedDevices.topFiveMostExpensiveSmartWatch().get(1).getId());
+            assertEquals("W1234",populatedDevices.topFiveMostExpensiveSmartWatch().get(2).getId());
+            assertEquals("W202",populatedDevices.topFiveMostExpensiveSmartWatch().get(3).getId());
+            assertEquals("W3535",populatedDevices.topFiveMostExpensiveSmartWatch().get(4).getId());
+        }
+
+        @Test
+        void listTopFiveMostExpensiveTabletButBelowFive() {
+            assertEquals(1, populatedDevices.numberOfTablet());
+
+            assertEquals("T1223", populatedDevices.topFiveMostExpensiveTablet().get(0).getId());
+        }
+
+        @Test
+        void listTopFiveMostExpensiveTablet() {
+            Tablet tablet0 = new Tablet("Tablet0", 700.0, apple, "T1", "Android", 64, "iPad");
+            populatedDevices.addTechnologyDevice(tablet0);
+            Tablet tablet1 = new Tablet("Tablet0", 400.0, apple, "T2", "Android", 64, "iPad");
+            populatedDevices.addTechnologyDevice(tablet1);
+            Tablet tablet2 = new Tablet("Tablet0", 500.0, apple, "T3", "Android", 64, "iPad");
+            populatedDevices.addTechnologyDevice(tablet2);
+            Tablet tablet3 = new Tablet("Tablet0", 600.0, apple, "T4", "Android", 64, "iPad");
+            populatedDevices.addTechnologyDevice(tablet3);
+            Tablet tablet4 = new Tablet("Tablet0", 700.0, apple, "T5", "Android", 64, "iPad");
+            populatedDevices.addTechnologyDevice(tablet4);
+
+            assertEquals(6, populatedDevices.numberOfTablet());
+
+            assertEquals("T1",populatedDevices.topFiveMostExpensiveTablet().get(0).getId());
+            assertEquals("T5",populatedDevices.topFiveMostExpensiveTablet().get(1).getId());
+            assertEquals("T1223",populatedDevices.topFiveMostExpensiveTablet().get(2).getId());
+            assertEquals("T4",populatedDevices.topFiveMostExpensiveTablet().get(3).getId());
+            assertEquals("T3",populatedDevices.topFiveMostExpensiveTablet().get(4).getId());
+        }
 
     }
 
-    @Nested
-    class ReportingMethods {
+//    @Nested
+//    class ReportingMethods {
+//
+//    }
 
+//    @Nested
+//    class SearchingMethods {
+//
+//    }
 
+    @Test
+    void isValidId() {
+        assertTrue(populatedDevices.isValidId("A123"));
+        assertTrue(populatedDevices.isValidId("W1234"));
+        assertTrue(populatedDevices.isValidId("T1223"));
+        assertTrue(populatedDevices.isValidId("W3535"));
+        //valid
 
-    }
-
-    @Nested
-    class SearchingMethods {
-
+        assertFalse(populatedDevices.isValidId("A111"));
     }
 
     @Nested

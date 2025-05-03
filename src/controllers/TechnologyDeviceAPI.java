@@ -140,7 +140,7 @@ public class TechnologyDeviceAPI implements ISerializer {
         return number;
     }
 
-    public int numberOfSmartwatch() {
+    public int numberOfSmartWatch() {
         int number = 0;
         for(Technology technology : technologyList) {
             if(technology instanceof SmartWatch) {
@@ -207,7 +207,7 @@ public class TechnologyDeviceAPI implements ISerializer {
     public String listAllTablets() {
         String listAllTablets = "";
         for(Technology technology : technologyList) {
-            if(technology instanceof SmartWatch) {
+            if(technology instanceof Tablet) {
                 listAllTablets += technologyList.indexOf(technology) + ": " + technology + "\n";
             }
         }
@@ -242,7 +242,7 @@ public class TechnologyDeviceAPI implements ISerializer {
             }
         }
         if(listAllTechnologyBelowPrice.isEmpty()) {
-            return "No Technology more expensive than " + price;
+            return "No technology cheaper than " + price;
         }
         else {
             return listAllTechnologyBelowPrice;
@@ -257,7 +257,7 @@ public class TechnologyDeviceAPI implements ISerializer {
             }
         }
         if(listAllTechDevicesByChosenManufacturer.isEmpty()) {
-            return "No technology manufactured by"  + manufacturer;
+            return "No technology manufactured by "  + manufacturer;
         }
         else {
             return listAllTechDevicesByChosenManufacturer;
@@ -269,7 +269,7 @@ public class TechnologyDeviceAPI implements ISerializer {
             String listAllTechDevicesByOperatingSystem = "";
             for(Technology technology : technologyList) {
                 if(technology instanceof Tablet && ((Tablet) technology).getOperatingSystem().equals(os)) {
-                    listAllTechDevicesByOperatingSystem += technologyList.indexOf(technology) + ": " + technology + "\n";
+                    listAllTechDevicesByOperatingSystem += technologyList.indexOf(technology) + ": " + "\n" + technology + "\n";
                 }
             }
             if(listAllTechDevicesByOperatingSystem.isEmpty()) {
@@ -291,19 +291,14 @@ public class TechnologyDeviceAPI implements ISerializer {
             while(swapOnRun) {
                 swapOnRun = false;
                 for(int index = 0; index < technologyList.size() - 1; index++) {
-//                    if(index != technologyList.size() - 1){
                     if(technologyList.get(index).getPrice() < technologyList.get(index + 1).getPrice()) {
                         swapOnRun = true;
                         swapTechnology(technologyList, index, index + 1);
-//                        }
                     }
                 }
             }
-//            System.out.println("Finish");
         }
-//        else {
-//            System.out.println("No technology in this list");
-//        }
+
     }
 
     public void sortByPriceAscending() {
@@ -311,9 +306,7 @@ public class TechnologyDeviceAPI implements ISerializer {
             sortByPriceDescending();
             this.technologyList = technologyList.reversed();
         }
-//        else {
-//            System.out.println("No technology in this list");
-//        }
+
     }
 
     private void swapTechnology (List<Technology> technologyList, int i, int j) {
@@ -330,7 +323,8 @@ public class TechnologyDeviceAPI implements ISerializer {
             return technologyList.subList(0, 5);
         }
         else {
-            return technologyList.subList(0, technologyList.size());
+//            return technologyList.subList(0, technologyList.size());
+            return technologyList;
         }
     }
 
@@ -352,7 +346,7 @@ public class TechnologyDeviceAPI implements ISerializer {
         List<Technology> fiveMostExpTablet = new ArrayList<>();
         sortByPriceDescending();
         for(Technology technology : technologyList) {
-            if(technology instanceof SmartWatch) {
+            if(technology instanceof Tablet) {
                 fiveMostExpTablet.add(technology);
                 if(fiveMostExpTablet.size() == 5) {
                     break;
