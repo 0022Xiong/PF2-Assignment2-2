@@ -3,13 +3,13 @@ package models;
 import utils.Utilities;
 
 public abstract class ComputingDevice extends Technology {
-    private int storage;
+    private int storage = 8;
     private String processor;
 
     public ComputingDevice(String modelName, double price, Manufacturer manufacturer, String id, int storage, String processor) {
         super(modelName, price, manufacturer, id);
         setStorage(storage);
-        this.processor = processor;
+        this.processor = Utilities.truncateString(processor, 20);
     }
 
     public int getStorage() {
@@ -31,7 +31,6 @@ public abstract class ComputingDevice extends Technology {
     }
 
     public String toString() {
-        return super.toString() + "\n" + "Storage: " + storage + "\n"
-                + "Processor: " + processor;
+        return super.toString() + ", " + "Processor: " + processor + ", " + "Storage: " + storage + "GB";
     }
 }

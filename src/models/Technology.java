@@ -11,7 +11,7 @@ public abstract class Technology {
         this.modelName = Utilities.truncateString(modelName, 30);
         setPrice(price);
         this.manufacturer = manufacturer;
-        this.id = Utilities.truncateString(id,10);
+        setId(id);
     }
     public double getPrice() {
         return price;
@@ -40,8 +40,8 @@ public abstract class Technology {
     public void setModelName(String modelName) {
         if(Utilities.validStringlength(modelName, 30))
             this.modelName = modelName;
-        else
-            this.modelName = Utilities.truncateString(modelName, 30);
+//        else
+//            this.modelName = Utilities.truncateString(modelName, 30);
     }
 
     public Manufacturer getManufacturer() {
@@ -53,10 +53,10 @@ public abstract class Technology {
     }
 
     public String toString(){
-        return "ID: " + id +"\n" +
-               "Model name: " + modelName +"\n" +
-               "Price: " + price + "\n" +
-               "Name and number of employees: " + manufacturer;
+        return "Model: " + modelName + ", " +
+               "Price: €" + price + ", " +
+               "Manufacturer Details: " + manufacturer + ", " +
+               "ID: " + id;
     }
     public abstract double getInsurancePremium();
 
