@@ -1,6 +1,5 @@
 package models;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -17,11 +16,6 @@ class ManufacturerTest {
         manBorder = new Manufacturer("Samsungs901234567890",  1);
         manBelowBorder = new Manufacturer("Samsungs90123456789" , 0);
         manEmpty = new Manufacturer("", -10);
-    }
-
-    @AfterEach
-    public void tearDown() {
-        manValid = manInvalid = manBorder = manBelowBorder = manEmpty = null;
     }
 
     @Test

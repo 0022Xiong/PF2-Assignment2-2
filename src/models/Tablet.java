@@ -1,9 +1,10 @@
 package models;
 
 import utils.OperatingSystemUtility;
+import utils.Utilities;
 
 public class Tablet extends ComputingDevice {
-    private String operatingSystem = "Window";
+    private String operatingSystem = "Windows";
     public Tablet(String id, double price, Manufacturer manufacturer, String modelName, String processor, int storage, String operatingSystem){
         super(price, id, modelName, manufacturer, storage, processor);
         setOperatingSystem(operatingSystem);

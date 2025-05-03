@@ -6,9 +6,9 @@ public abstract class ComputingDevice extends Technology{
     private int storage;
     private String processor;
     public ComputingDevice(double price, String id, String modelName, Manufacturer manufacturer,int storage,String processor){
-        super(price, id, modelName, manufacturer);
+        super(modelName, price, manufacturer, id);
         setStorage(storage);
-        this.processor = processor;
+        this.processor = Utilities.truncateString(processor,20);
     }
 
     public int getStorage() {
@@ -29,7 +29,6 @@ public abstract class ComputingDevice extends Technology{
             this.processor = processor;
     }
    public String toString(){
-        return  super.toString() + "storage" + storage +"\n"
-                +"processor" + processor;
+        return  super.toString() + "storage" + storage + "processor" + processor;
    }
 }

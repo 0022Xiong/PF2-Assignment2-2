@@ -3,14 +3,14 @@ package models;
 import utils.Utilities;
 
 public abstract class Technology {
-    private double price;
-    private String id;
     private String modelName;
+    private double price = 20;
+    private String id = "unknown";
     private Manufacturer manufacturer;
-    public Technology(double price,String id,String modelName,Manufacturer manufacturer){
+    public Technology(String modelName,double price,Manufacturer manufacturer,String id){
         setPrice(price);
         this.id = Utilities.truncateString(id,10);
-        this.modelName = modelName;
+        this.modelName = Utilities.truncateString(modelName,30);
         this.manufacturer = manufacturer;
     }
     public double getPrice() {
@@ -36,7 +36,9 @@ public abstract class Technology {
     }
 
     public void setModelName(String modelName) {
-        this.modelName = modelName;
+        if (Utilities.validStringlength(modelName, 30)) {
+            this.modelName = modelName;
+        }
     }
 
     public Manufacturer getManufacturer() {
@@ -48,10 +50,7 @@ public abstract class Technology {
     }
 
     public String toString(){
-        return "ID: " + id +"\n" +
-               "Model name: " + modelName +"\n" +
-               "Price: " + price + "\n" +
-               "Name and number of employees: " + manufacturer;
+        return "Model: " + modelName +", Price: " + price + ", Manufacturer Details: " + manufacturer + ", ID: " + id;
     }
     public abstract double getInsurancePremium();
 
