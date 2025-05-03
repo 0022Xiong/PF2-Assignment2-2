@@ -3,7 +3,7 @@ package models;
 import utils.Utilities;
 
 public abstract class ComputingDevice extends Technology{
-    private int storage;
+    private int storage = 8 ;
     private String processor;
     public ComputingDevice(double price, String id, String modelName, Manufacturer manufacturer,int storage,String processor){
         super(modelName, price, manufacturer, id);
@@ -29,6 +29,6 @@ public abstract class ComputingDevice extends Technology{
             this.processor = processor;
     }
    public String toString(){
-        return  super.toString() + "storage" + storage + "processor" + processor;
+        return  super.toString() + "Processor: Snapdragon " + processor + ", Storage: "+storage;
    }
 }
