@@ -21,6 +21,6 @@ public class SmartBand extends WearableDevice{
         return "Connects to the internet via bluetooth";
     }
     public String toString(){
-        return super.toString() + "\n" + "HeartRateMonitor: " + heartRateMonitor;
+        return super.toString() + "HeartRateMonitor: " + heartRateMonitor;
     }
 }

@@ -5,7 +5,7 @@ public abstract class WearableDevice extends Technology{
 
     private String material;
     private String size;
-    public WearableDevice(String modelName, double price, Manufacturer manufacturer, String id, String size,  String material) {
+    public WearableDevice(String modelName, double price, Manufacturer manufacturer, String id, String size, String material) {
         super(modelName, price, manufacturer, id);
         this.size=Utilities.truncateString(size,10);
         this.material= Utilities.truncateString(material,20);
@@ -31,7 +31,6 @@ public abstract class WearableDevice extends Technology{
     public abstract double getInsurancePremium();
     public abstract String connectToInternet();
     public String toString(){
-        return super.toString() + "\n" + "Material: " + material + "\n" +
-                "Size: " + size;
+        return super.toString() + "Material: " + material + ",Size: " + size;
     }
 }
