@@ -43,9 +43,10 @@ class SmartBandTest {
 
     @Test
     void testToString() {
-        String expected = "Operating System: Android, Insurance Premium: €7.99";
-        assertTrue( validSmartBand.toString().contains(expected));
-        expected = "Operating System: Windows, Insurance Premium: €0.2";
-        assertTrue( invalidSmartBand.toString().contains(expected));
+        String expected = "WearableDevice{material='Silicon', size='Small', modelName='Galaxy Watch', price=230.0, manufacturer=Manufacturer{manufacturerName='Samsung', numEmployees=333 employees}, id='123456'}, Heart Rate Monitor: Includes Heart Rate Monitor, Insurance Premium: 16.1, Internet Connection: Connected";
+        assertEquals(expected, validSmartBand.toString());
+
+        expected = "WearableDevice{material='Silicon', size='TooLarge', modelName='Galaxy Watch version 1 c.09462', price=20.0, manufacturer=Manufacturer{manufacturerName='ABCDEFGHIJKLMNOPQRST', numEmployees=1 employee}, id='1234567891'}, Heart Rate Monitor: No Heart Rate Monitor included, Insurance Premium: 1.4, Internet Connection: Connected";
+        assertEquals(expected, invalidSmartBand.toString());
     }
 }
