@@ -6,69 +6,50 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class WearableDeviceTest {
 
-    private SmartBand validSmartBand, invalidSmartBand;
-    private SmartWatch validSmartWatch,invalidSmartWatch;
+    private WearableDevice validWearableDevice;
+    private WearableDevice invalidWearableDevice;
 
     void setUp() {
         Manufacturer manufacturer = new Manufacturer("Samsung", 333);
         Manufacturer invalidManufacturer = new Manufacturer("ABCDEFGHIJKLMNOPQRSTU", 0);
-        validSmartBand = new SmartBand("Galaxy Tab S7", 799.99, manufacturer, "123456", "123456789", "12345678901234567890", true);
-        invalidSmartBand = new SmartBand("Galaxy Tab S7 version 1 c.09462b", 19, invalidManufacturer, "12345678910", "Snapdragon 8655678920", "123456789012345678901234567890",true);
-        validSmartWatch = new SmartWatch("Galaxy Tab S7",799.99, manufacturer,"123456", "123456789","12345678901234567890", "LCD");
-        invalidSmartWatch = new SmartWatch("Galaxy Tab S7 version 1 c.09462b", 19, invalidManufacturer, "12345678910", "Snapdragon 8655678920","123456789012345678901234567890","DSSL");
+        validWearableDevice = new SmartWatch("Galaxy Watch", 230, manufacturer, "123456", "Silicon", "Small", "AMOLED");
+        invalidWearableDevice = new SmartWatch("Galaxy Watch version 1 c.09462b", 19, invalidManufacturer, "12345678910", "Silicon", "TooLarge", "InvalidDisplay");
     }
     void tearDown() {
-        validSmartBand=invalidSmartBand=null;
-        validSmartWatch=invalidSmartWatch=null;
+        validWearableDevice = invalidWearableDevice = null;
     }
 
     @Test
     void getMaterial() {
-        assertEquals("12345678901234567890", validSmartWatch.getMaterial());
-        assertEquals("123456789012345678901234567890", invalidSmartWatch.getMaterial());
-        assertEquals("12345678901234567890", validSmartBand.getMaterial());
-        assertEquals("123456789012345678901234567890", invalidSmartBand.getMaterial());
+        assertEquals("Silicon", validWearableDevice.getMaterial());
+        assertEquals("Silicon", invalidWearableDevice.getMaterial());
     }
 
     @Test
     void setMaterial() {
-        validSmartBand.setMaterial("12345678901234567890");
-        assertEquals("12345678901234567890", validSmartBand.getMaterial());
-        validSmartBand.setMaterial("123456789012345678901234567890");
-        assertEquals("12345678901234567890", validSmartBand.getMaterial());
-        validSmartWatch.setMaterial("12345678901234567890");
-        assertEquals("12345678901234567890", validSmartWatch.getMaterial());
-        validSmartWatch.setMaterial("123456789012345678901234567890");
-        assertEquals("12345678901234567890", validSmartWatch.getMaterial());
+        validWearableDevice.setMaterial("Plastic");
+        assertEquals("Plastic", validWearableDevice.getMaterial());
+        invalidWearableDevice.setMaterial("Steel");
+        assertEquals("Steel", invalidWearableDevice.getMaterial());
     }
     @Test
     void getSize(){
-        assertEquals("123456789", validSmartWatch.getSize());
-        assertEquals("Snapdragon 8655678920", invalidSmartWatch.getSize());
-        assertEquals("123456789", validSmartBand.getSize());
-        assertEquals("Snapdragon 8655678920", invalidSmartBand.getSize());
+        assertEquals("Small", validWearableDevice.getSize());
+        assertEquals("TooLarge", invalidWearableDevice.getSize());
     }
     @Test
     void setSize(){
-        validSmartBand.setSize("123456789");
-        assertEquals("123456789", validSmartBand.getSize());
-        validSmartBand.setSize("123456789012345678901234567890");
-        assertEquals("123456789", validSmartBand.getSize());
-        validSmartWatch.setSize("123456789");
-        assertEquals("123456789", validSmartWatch.getSize());
-        validSmartWatch.setSize("123456789012345678901234567890");
-        assertEquals("123456789", validSmartWatch.getSize());
+        validWearableDevice.setSize("Medium");
+        assertEquals("Medium", validWearableDevice.getSize());
+        invalidWearableDevice.setSize("Large");
+        assertEquals("Large", invalidWearableDevice.getSize());
     }
     @Test
     void testToString() {
-        String expected = "Material: 12345678901234567890,Size: 123456789";
-        assertTrue( validSmartBand.toString().contains(expected));
-        expected = "Material: 123456789012345678901234567890,Size: 123456789012345678901234567890";
-        assertTrue( invalidSmartBand.toString().contains(expected));
+        String expected = "material: Silicon, size: Small";
+        assertEquals(expected, validWearableDevice.toString());
 
-        String expected2 = "Material: 12345678901234567890,Size: 123456789";
-        assertTrue( validSmartWatch.toString().contains(expected));
-        expected2 = "Material: 123456789012345678901234567890,Size: 123456789012345678901234567890";
-        assertTrue( invalidSmartWatch.toString().contains(expected));
+        expected = "material: Silicon, size: TooLarge";
+        assertEquals(expected, invalidWearableDevice.toString());
     }
 }

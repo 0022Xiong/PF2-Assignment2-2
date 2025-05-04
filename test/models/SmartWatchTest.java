@@ -53,9 +53,10 @@ class SmartWatchTest {
 
     @Test
     void testToString() {
-        String expected = "Operating System: Android, Insurance Premium: €7.99";
-        assertTrue( validSmartWatch.toString().contains(expected));
-        expected = "Operating System: Windows, Insurance Premium: €0.2";
-        assertTrue( invalidSmartWatch.toString().contains(expected));
+        String expected = "Type: AMOLED";
+        assertEquals(expected, validSmartWatch.toString());
+
+        expected = "Type: LCD";
+        assertEquals(expected, invalidSmartWatch.toString());
     }
 }
