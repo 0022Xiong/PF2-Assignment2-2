@@ -2,6 +2,8 @@ package models;
 
 import utils.Utilities;
 
+import java.util.Objects;
+
 public abstract class ComputingDevice extends Technology {
     private int storage = 8;
     private String processor;
@@ -30,7 +32,16 @@ public abstract class ComputingDevice extends Technology {
             this.processor = processor;
     }
 
+    @Override
     public String toString() {
         return super.toString() + ", " + "Processor: " + processor + ", " + "Storage: " + storage + "GB";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        ComputingDevice that = (ComputingDevice) o;
+        return storage == that.storage && Objects.equals(processor, that.processor);
+    }
+
 }

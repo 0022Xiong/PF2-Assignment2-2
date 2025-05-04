@@ -2,6 +2,8 @@ package models;
 
 import utils.Utilities;
 
+import java.util.Objects;
+
 public abstract class Technology {
     private double price = 20;
     private String id = "unknown";
@@ -48,6 +50,7 @@ public abstract class Technology {
         this.manufacturer = manufacturer;
     }
 
+    @Override
     public String toString(){
         return "Model: " + modelName + ", " +
                "Price: €" + price + ", " +
@@ -57,5 +60,12 @@ public abstract class Technology {
     public abstract double getInsurancePremium();
 
     public abstract String connectToInternet();
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Technology that = (Technology) o;
+        return Double.compare(price, that.price) == 0 && Objects.equals(id, that.id) && Objects.equals(modelName, that.modelName) && Objects.equals(manufacturer, that.manufacturer);
+    }
 
 }

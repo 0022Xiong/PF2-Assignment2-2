@@ -1,6 +1,8 @@
 package models;
 import utils.Utilities;
 
+import java.util.Objects;
+
 public abstract class WearableDevice extends Technology{
 
     private String material;
@@ -30,7 +32,18 @@ public abstract class WearableDevice extends Technology{
     }
     public abstract double getInsurancePremium();
     public abstract String connectToInternet();
+
+    @Override
     public String toString(){
         return super.toString() + ", " + "Material: " + material + ", " + "Size: " + size;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        WearableDevice that = (WearableDevice) o;
+        return Objects.equals(material, that.material) && Objects.equals(size, that.size);
+    }
+
 }
