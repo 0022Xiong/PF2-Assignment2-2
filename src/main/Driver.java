@@ -57,7 +57,6 @@ public class Driver {
                     case 6 -> sortTechnologyDevices();
                     case 10 -> saveAll();
                     case 11 -> loadAll();
-                    //TODO - Add options
                     default ->  System.out.println("Invalid option entered" + option);
                 }
                 ScannerInput.readNextLine("\n Press the enter key to continue");
@@ -114,8 +113,9 @@ public class Driver {
             technologyDeviceAPI.load();
         }
 
-        private void exitApp(){
-            //TODO - save all the data entered
+        private void exitApp() throws Exception {
+            saveAll();
+            loadAll();
             System.out.println("Exiting....");
             System.exit(0);
         }
@@ -248,7 +248,7 @@ public class Driver {
                 ScannerInput.readNextLine("\n Press the enter key to continue");
                 option = techAPIMenu();
             }
-            runMainMenu();
+            runTechAPIMenu();
         }
 
             private void addSmartBand() {
@@ -309,7 +309,7 @@ public class Driver {
                 ScannerInput.readNextLine("\n Press the enter key to continue");
                 option = techAPIMenu();
             }
-            runMainMenu();
+            runTechAPIMenu();
         }
 
             private void deleteByIndex() {
@@ -349,7 +349,7 @@ public class Driver {
                 ScannerInput.readNextLine("\n Press the enter key to continue");
                 option = techAPIMenu();
             }
-            runMainMenu();
+            runTechAPIMenu();
         }
 
             private void updateSmartBand() {
@@ -510,7 +510,6 @@ public class Driver {
             return technologyDeviceAPI.listAllTabletsByOperatingSystem(os);
         }
 
-//todo update methods counting methods
     private Manufacturer newManufacturer() {
         String manufacturerName = ScannerInput.readNextLine("Please enter the manufacturer name: ");
         int manufacturerNumEmployees = ScannerInput.readNextInt("Please enter the number of employees: ");
@@ -523,7 +522,6 @@ public class Driver {
         double price = ScannerInput.readNextDouble("Enter price: ");
         Manufacturer manufacturer = newManufacturer();
         String id = ScannerInput.readNextLine("Enter ID: ");
-//        String id = verifyId();
         String material = ScannerInput.readNextLine("Enter material: ");
         String size = ScannerInput.readNextLine("Enter size: ");
         boolean heartRateMonitor = Utilities.YNtoBoolean(ScannerInput.readNextChar("Have heartRateMonitor? (y/n): "));
@@ -536,7 +534,6 @@ public class Driver {
         double price = ScannerInput.readNextDouble("Enter price: ");
         Manufacturer manufacturer = newManufacturer();
         String id = ScannerInput.readNextLine("Enter ID: ");
-//        String id = verifyId();
         String material = ScannerInput.readNextLine("Enter material: ");
         String size = ScannerInput.readNextLine("Enter size: ");
         String displayType = ScannerInput.readNextLine("Enter displayType: ");
@@ -549,7 +546,6 @@ public class Driver {
         double price = ScannerInput.readNextDouble("Enter price: ");
         Manufacturer manufacturer = chooseManufacturer();
         String id = ScannerInput.readNextLine("Enter ID: ");
-//        String id = verifyId();
         String processor = ScannerInput.readNextLine("Enter processor: ");
         int storage = ScannerInput.readNextInt("Enter storage: ");
         String operatingSystem = ScannerInput.readNextLine("Enter OS: ");
@@ -565,28 +561,6 @@ public class Driver {
         }
         return manufacturerAPI.getManufacturerByIndex(index);
     }
-
-//    private String verifyId() {
-//        String id = ScannerInput.readNextLine("Enter ID: ");
-//        while (technologyDeviceAPI.isValidId(id)){
-//            System.out.println("The ID is already existed");
-//            id = ScannerInput.readNextLine("Enter ID: ");
-//        }
-//        return id;
-//    }
-
-        //---------------------
-        //  General Menu Items
-        //---------------------
-
-//TODO - write all the methods that are called from your menu
-
-        //---------------------
-        //  Helper Methods
-        //---------------------
-
-//TODO- write any helper methods that are required
-
 
     private Manufacturer getManufacturerByName(){
         String manufacturerName = ScannerInput.readNextLine("Please enter the manufacturer's name: ");
