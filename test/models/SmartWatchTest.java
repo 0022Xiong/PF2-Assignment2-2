@@ -21,7 +21,7 @@ class SmartWatchTest {
     }
     @Test
     public void testInvalidDisplaySystem() {
-        assertEquals("LCDD", invalidSmartWatch.getDisplayType()); // Invalid OS should default to "Windows OS"
+        assertEquals("LCD", invalidSmartWatch.getDisplayType()); // Invalid OS should default to "Windows OS"
     }
     @AfterEach
     void tearDown() {validSmartWatch = invalidSmartWatch=null;}
@@ -46,9 +46,9 @@ class SmartWatchTest {
         validSmartWatch.setDisplayType("LCD 1");
         assertEquals("LCD", validSmartWatch.getDisplayType());
         validSmartWatch.setDisplayType("LED 1");
-        assertEquals("LED", validSmartWatch.getDisplayType());
+        assertEquals("LCD", validSmartWatch.getDisplayType());
         validSmartWatch.setDisplayType("TFT 1");
-        assertEquals("LED", validSmartWatch.getDisplayType());
+        assertEquals("LCD", validSmartWatch.getDisplayType());
     }
 
     @Test

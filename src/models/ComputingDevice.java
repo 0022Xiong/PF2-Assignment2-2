@@ -8,8 +8,10 @@ public abstract class ComputingDevice extends Technology {
 
     public ComputingDevice(String modelName, double price, Manufacturer manufacturer, String id, int storage, String processor) {
         super(modelName, price, manufacturer, id);
-        setStorage(storage);
-        this.processor = processor;
+        if(Utilities.validRange(storage,8,128)&& storage%8 == 0 ){
+            this.storage=storage;
+        }
+        this.processor = Utilities.truncateString(processor,20);
     }
 
     public int getStorage() {

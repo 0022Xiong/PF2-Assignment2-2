@@ -3,8 +3,8 @@ import utils.Utilities;
 
 public abstract class WearableDevice extends Technology{
 
-    private String material;
-    private String size;
+    private String material="";
+    private String size = "";
     public WearableDevice(String modelName, double price, Manufacturer manufacturer, String id, String size, String material) {
         super(modelName, price, manufacturer, id);
         this.size=Utilities.truncateString(size,10);
